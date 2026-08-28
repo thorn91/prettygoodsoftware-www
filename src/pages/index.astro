@@ -33,7 +33,15 @@ const whoFacts = [
       content="Small apps, tailored to you. A one-person software company."
     />
     <meta property="og:url" content="https://prettygoodsoftware.llc/" />
-    <meta name="twitter:card" content="summary" />
+    <!-- Without an explicit og:image, scrapers grab the largest image on the
+         page — which is a client's training footage. The card is the mark. -->
+    <meta property="og:image" content="https://prettygoodsoftware.llc/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Pretty Good Software — two overlapping ink circles" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://prettygoodsoftware.llc/og.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
