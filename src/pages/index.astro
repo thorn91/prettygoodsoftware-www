@@ -54,7 +54,17 @@ const whoFacts = [
   <body>
     <header class="nav-wrap">
       <nav class="nav">
-        <a class="wordmark" href="/">Pretty Good Software</a>
+        <a class="wordmark" href="/">
+          <!-- The mark, inline: lens drawn explicitly rather than blended, so
+               it renders identically everywhere (same trick as the favicon). -->
+          <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+            <clipPath id="mlens"><circle cx="26" cy="39" r="17" /></clipPath>
+            <circle cx="40" cy="26" r="20" fill="#E14424" />
+            <circle cx="26" cy="39" r="17" fill="#4B3A8C" />
+            <circle cx="40" cy="26" r="20" fill="#420F13" clip-path="url(#mlens)" />
+          </svg>
+          Pretty Good Software
+        </a>
         <div class="nav-links">
           <a href="#who">Who it's for</a>
           <a href="mailto:tom@prettygoodsoftware.llc">Email</a>
@@ -307,7 +317,14 @@ const whoFacts = [
         border-bottom: 1.5px solid var(--ink);
         flex-wrap: wrap;
       }
-      .wordmark { font-size: 1.1rem; text-decoration: none; }
+      .wordmark {
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .mark { width: 26px; height: 26px; }
       .nav-links { display: flex; gap: 1.5rem; }
       .nav-links a {
         font-family: var(--display);
