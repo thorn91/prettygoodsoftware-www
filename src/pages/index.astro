@@ -6,10 +6,10 @@ const capabilities = [
   'PDF report for the client',
 ];
 
-const dataFacts = [
-  ['Accounts', 'None'],
-  ['Cloud sync', 'None'],
-  ['Analytics and tracking', 'None'],
+const whoFacts = [
+  ['Marketing budget', 'None'],
+  ['Growth targets', 'None'],
+  ['What gets built', 'Whatever problem is most interesting'],
 ];
 ---
 
@@ -48,7 +48,7 @@ const dataFacts = [
       <nav class="nav">
         <a class="wordmark" href="/">Pretty Good Software</a>
         <div class="nav-links">
-          <a href="#privacy">Privacy</a>
+          <a href="#who">Who it's for</a>
           <a href="mailto:tom@prettygoodsoftware.llc">Email</a>
         </div>
       </nav>
@@ -114,6 +114,12 @@ const dataFacts = [
               {capabilities.map((c) => <li>{c}</li>)}
             </ul>
 
+            <p class="card-privacy">
+              No accounts, no cloud sync, no analytics — clips, notes, and the
+              reports you make from them stay on the phone that recorded them.
+              There is no server for them to go to.
+            </p>
+
             <div class="card-actions">
               <a class="btn" href="https://coaching.prettygoodsoftware.llc">
                 coaching.prettygoodsoftware.llc <span aria-hidden="true">↗</span>
@@ -150,40 +156,47 @@ const dataFacts = [
         <h2>One person</h2>
         <div class="person-copy">
           <p class="big">
-            Pretty Good Software is Thomas Horn — that's me. By day I lead the
-            engineering team on a large, complicated accounting application, which
-            is where I learned what software built to fit everyone does to the
-            people who have to use it every day.
+            Pretty Good Software is a one-person company. By day that person
+            leads the engineering team on a large, complicated accounting
+            application — which is where you learn what software built to fit
+            everyone does to the people who have to use it every day.
           </p>
           <p>
-            I started programming to solve problems and automate boring work, and
-            that is still the motive. An app here is built around the job rather
-            than around keeping you in it — when it does what it claims, it is
-            finished, and it gets out of the way. So this stays deliberately
-            small: I design the apps, write the code, and answer the email. It
-            makes for a short roadmap and quick replies.
+            I'm Thomas Horn. I started programming to solve problems and automate
+            boring work, and that is still the motive. An app here is built
+            around the job rather than around keeping you in it — when it does
+            what it claims, it is finished, and it gets out of the way. I design
+            the apps, write the code, and answer the email. It makes for a short
+            roadmap and quick replies.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="data" id="privacy">
+    <section class="data" id="who">
       <div class="inner data-inner">
         <div>
-          <p class="eyebrow eyebrow-light">Pretty Good Video Coaching</p>
-          <h2>Your client video stays on the phone.</h2>
+          <p class="eyebrow eyebrow-light">Not a market segment</p>
+          <h2>Who is this for?</h2>
         </div>
         <div>
           <p class="data-text">
-            This app runs entirely on the device. There are no accounts and no
-            sign-in, nothing syncs to a cloud, and there is no analytics or
-            tracking of any kind. Clips, your notes, and the reports you make from
-            them live in the app on the iPhone that recorded them and go nowhere
-            else — because there is no server for them to go to.
+            Every app here starts as one particular problem that someone actually
+            has. The coaching app began as one physical therapist's movement
+            analysis, built around the way he really works — more PTs use it now,
+            but it was never designed to be everything for every PT. It does its
+            one job. If the job in front of you looks like that job, it will fit.
+          </p>
+          <p class="data-text">
+            The only costs in a company like this are building and maintaining
+            the apps — there is no ad spend to recoup and no growth target to
+            hit. So I choose what to work on by whether the problem is
+            interesting and worth solving properly, not by the size of the
+            audience.
           </p>
           <dl class="facts">
             {
-              dataFacts.map(([k, v]) => (
+              whoFacts.map(([k, v]) => (
                 <div class="fact">
                   <dt>{k}</dt>
                   <dd>{v}</dd>
@@ -448,6 +461,15 @@ const dataFacts = [
         border-bottom: 1.5px solid var(--rule-firm);
       }
 
+      .card-privacy {
+        color: var(--muted);
+        font-size: 0.95rem;
+        max-width: 58ch;
+        margin-top: 1.4rem;
+        padding-left: 1rem;
+        border-left: 3px solid var(--grape);
+      }
+
       .card-actions {
         display: flex;
         align-items: center;
@@ -516,6 +538,7 @@ const dataFacts = [
         gap: clamp(1.8rem, 5vw, 4rem);
       }
       .data-text { color: #e6dffa; }
+      .data-text + .data-text { margin-top: 1.2rem; }
       .facts { margin-top: 2rem; }
       .fact {
         display: flex;
