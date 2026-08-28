@@ -1,0 +1,571 @@
+---
+const capabilities = [
+  'Frame-accurate review',
+  'On-screen joint angles',
+  'Recorded voice analysis',
+  'PDF report for the client',
+];
+
+const dataFacts = [
+  ['Accounts', 'None'],
+  ['Cloud sync', 'None'],
+  ['Analytics and tracking', 'None'],
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pretty Good Software — small apps, tailored to you</title>
+    <meta
+      name="description"
+      content="A one-person software company. Small, sharp tools shaped around one person and the job in front of them — made to be used and finished, not to keep you coming back."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pretty Good Software" />
+    <meta property="og:title" content="Pretty Good Software" />
+    <meta
+      property="og:description"
+      content="Small apps, tailored to you. A one-person software company."
+    />
+    <meta property="og:url" content="https://prettygoodsoftware.llc/" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="nav-wrap">
+      <nav class="nav">
+        <a class="wordmark" href="/">Pretty Good Software</a>
+        <div class="nav-links">
+          <a href="#privacy">Privacy</a>
+          <a href="mailto:tom@prettygoodsoftware.llc">Email</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero. The two overprinting circles are the brand mark: real riso
+         inks overlap and multiply into a third colour, so `mix-blend-mode:
+         multiply` is doing the actual print behaviour rather than faking it
+         with a hand-picked overlap swatch. -->
+    <section class="hero">
+      <div class="inner hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow eyebrow-grape">A one-person software company</p>
+          <h1>Small apps,<br />tailored to you.</h1>
+          <p class="lede">
+            Software built to fit everyone ends up fitting no one in particular.
+            I build the opposite: small, sharp tools shaped around one person and
+            the job actually in front of them — made to be used and finished, not
+            to keep you coming back.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#what-i-make">
+              See what I'm building <span aria-hidden="true">→</span>
+            </a>
+            <p class="hero-write">
+              or write to
+              <a href="mailto:tom@prettygoodsoftware.llc">tom@prettygoodsoftware.llc</a>
+            </p>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="dots"></div>
+          <div class="ink ink-grape"></div>
+          <div class="ink ink-vermilion"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="make" id="what-i-make">
+      <div class="inner">
+        <div class="section-head">
+          <h2>What I make</h2>
+          <p class="eyebrow">One app, in beta</p>
+        </div>
+
+        <article class="card">
+          <div class="card-body">
+            <p class="card-kicker">
+              <span class="num">01</span>
+              <span class="dash" aria-hidden="true"></span>
+              For physical therapists
+            </p>
+            <h3>Pretty Good Video Coaching</h3>
+            <p class="card-text">
+              An iPhone app for reviewing how a client moves. Step through a clip
+              one frame at a time, measure joint angles directly on the video, and
+              record your analysis out loud while you point at what matters. When
+              you're finished, the app puts it together as a PDF report the client
+              can take home. It all happens on the phone that recorded the clip.
+            </p>
+
+            <ul class="chips">
+              {capabilities.map((c) => <li>{c}</li>)}
+            </ul>
+
+            <div class="card-actions">
+              <a class="btn" href="https://coaching.prettygoodsoftware.llc">
+                coaching.prettygoodsoftware.llc <span aria-hidden="true">↗</span>
+              </a>
+              <p class="meta">iPhone · iOS 17+ · TestFlight beta</p>
+            </div>
+          </div>
+
+          <!-- The offset vermilion block behind the phone is the same
+               overprint idea as the hero, flattened into a hard shadow. -->
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img
+              src="/img/player.jpg"
+              width="640"
+              height="1391"
+              alt="The app mid-analysis: a squat paused on one frame with a joint angle measured across the barbell."
+            />
+          </div>
+        </article>
+
+        <article class="slot">
+          <span class="num">02</span>
+          <div>
+            <h3>Nothing here yet</h3>
+            <p>The second app turns up when the first one is finished.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="person">
+      <div class="inner person-inner">
+        <h2>One person</h2>
+        <div class="person-copy">
+          <p class="big">
+            Pretty Good Software is Thomas Horn — that's me. By day I lead the
+            engineering team on a large, complicated accounting application, which
+            is where I learned what software built to fit everyone does to the
+            people who have to use it every day.
+          </p>
+          <p>
+            I started programming to solve problems and automate boring work, and
+            that is still the motive. An app here is built around the job rather
+            than around keeping you in it — when it does what it claims, it is
+            finished, and it gets out of the way. So this stays deliberately
+            small: I design the apps, write the code, and answer the email. It
+            makes for a short roadmap and quick replies.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="data" id="privacy">
+      <div class="inner data-inner">
+        <div>
+          <p class="eyebrow eyebrow-light">Pretty Good Video Coaching</p>
+          <h2>Your client video stays on the phone.</h2>
+        </div>
+        <div>
+          <p class="data-text">
+            This app runs entirely on the device. There are no accounts and no
+            sign-in, nothing syncs to a cloud, and there is no analytics or
+            tracking of any kind. Clips, your notes, and the reports you make from
+            them live in the app on the iPhone that recorded them and go nowhere
+            else — because there is no server for them to go to.
+          </p>
+          <dl class="facts">
+            {
+              dataFacts.map(([k, v]) => (
+                <div class="fact">
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="inner">
+        <div class="foot-grid">
+          <div>
+            <p class="foot-mark">Pretty Good Software</p>
+            <p class="foot-tag">Small apps, shaped around the person using them.</p>
+          </div>
+          <div>
+            <p class="eyebrow eyebrow-light">Apps</p>
+            <p class="foot-link">
+              <a href="https://coaching.prettygoodsoftware.llc">Pretty Good Video Coaching</a>
+            </p>
+            <p class="foot-sub">coaching.prettygoodsoftware.llc</p>
+          </div>
+          <div>
+            <p class="eyebrow eyebrow-light">Contact</p>
+            <p class="foot-link">
+              <a href="mailto:tom@prettygoodsoftware.llc">tom@prettygoodsoftware.llc</a>
+            </p>
+            <p class="foot-sub">Beta questions and bug reports welcome.</p>
+          </div>
+        </div>
+        <p class="copyright">© 2026 Pretty Good Software LLC</p>
+      </div>
+    </footer>
+
+    <style is:global>
+      :root {
+        --paper: #f3ebda;
+        --paper-lit: #fdf7ec;
+        --paper-warm: #f6efe0;
+        --ink: #241e1a;
+        --vermilion: #e14424;
+        --grape: #4b3a8c;
+        --grape-lit: #6e5eab;
+        --lilac: #c4b6ee;
+        --muted: #6b5f55;
+        --muted-soft: #8c8074;
+        --rule: #dcceb6;
+        --rule-firm: #c7b79e;
+
+        --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+        --body: 'Newsreader', ui-serif, Georgia, serif;
+        --gut: clamp(1.5rem, 5vw, 5rem);
+      }
+
+      *,
+      *::before,
+      *::after { box-sizing: border-box; }
+      * { margin: 0; }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* `height: auto` is load-bearing: the img carries width/height attributes
+         (which is what reserves layout space and avoids a shift on load), and
+         without it a max-width cap shrinks the width while the attribute keeps
+         the height, stretching the image. */
+      img { display: block; max-width: 100%; height: auto; }
+
+      a { color: inherit; }
+
+      .inner {
+        max-width: 1180px;
+        margin-inline: auto;
+        padding-inline: var(--gut);
+      }
+
+      h1, h2, h3, .wordmark, .btn, .chips li, .foot-mark, .num {
+        font-family: var(--display);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .eyebrow {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-soft);
+      }
+      .eyebrow-grape { color: var(--grape); }
+      .eyebrow-light { color: var(--lilac); }
+
+      /* ---------- nav ---------- */
+      .nav-wrap { background: var(--paper); }
+      .nav {
+        max-width: 1180px;
+        margin-inline: auto;
+        padding: 1.6rem var(--gut) 1.1rem;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1.5px solid var(--ink);
+        flex-wrap: wrap;
+      }
+      .wordmark { font-size: 1.1rem; text-decoration: none; }
+      .nav-links { display: flex; gap: 1.5rem; }
+      .nav-links a {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .nav-links a:hover { color: var(--vermilion); }
+
+      /* ---------- hero ---------- */
+      .hero { background: var(--paper); overflow: hidden; }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+        gap: clamp(1.5rem, 3vw, 3rem);
+        align-items: center;
+        padding-top: clamp(3rem, 6vw, 5rem);
+        padding-bottom: clamp(3.5rem, 7vw, 6rem);
+        position: relative;
+      }
+      .hero-copy { max-width: 46ch; }
+      /* Sized so "tailored to you." holds on one line at every width — the
+         two-line break is the whole shape of this headline, and a third line
+         makes it read as a paragraph. */
+      h1 {
+        font-size: clamp(2.6rem, 5.1vw, 4.3rem);
+        line-height: 1;
+        margin-top: 1.1rem;
+      }
+      .lede {
+        font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+        color: var(--muted);
+        margin-top: 1.6rem;
+        max-width: 46ch;
+      }
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.4rem;
+        flex-wrap: wrap;
+        margin-top: 2.2rem;
+      }
+      .hero-write { color: var(--muted); font-size: 0.98rem; }
+      .hero-write a { color: var(--vermilion); text-underline-offset: 3px; }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: var(--vermilion);
+        color: var(--paper-lit);
+        font-size: 0.95rem;
+        padding: 0.85rem 1.4rem;
+        text-decoration: none;
+        border: none;
+      }
+      .btn:hover { background: var(--ink); }
+
+      /* The art column is decorative; it collapses away on narrow screens
+         rather than squashing the circles into overlapping mush. */
+      .hero-art {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        max-height: 400px;
+      }
+      /* The dot field is a backdrop for the circles, so it is tied to their
+         box — left to fill the column it becomes a large empty grid that
+         reads as an unfinished section. */
+      .dots {
+        position: absolute;
+        inset: 0 -3rem 0 0;
+        background-image: radial-gradient(var(--rule-firm) 1.1px, transparent 1.1px);
+        background-size: 13px 13px;
+        opacity: 0.8;
+      }
+      .ink {
+        position: absolute;
+        border-radius: 50%;
+        mix-blend-mode: multiply;
+      }
+      .ink-vermilion {
+        background: var(--vermilion);
+        width: 62%; aspect-ratio: 1;
+        top: 4%; right: -6%;
+      }
+      .ink-grape {
+        background: var(--grape);
+        width: 52%; aspect-ratio: 1;
+        top: 30%; right: 34%;
+        opacity: 0.92;
+      }
+
+      /* ---------- what I make ---------- */
+      .make { background: var(--paper-warm); padding-block: clamp(3rem, 6vw, 5rem); }
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); line-height: 1.05; }
+
+      .card {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+        gap: clamp(1.5rem, 4vw, 3.5rem);
+        border: 1.5px solid var(--ink);
+        background: var(--paper-lit);
+        padding: clamp(1.5rem, 3.5vw, 2.8rem);
+        align-items: center;
+      }
+      .card-kicker {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-soft);
+      }
+      .num { color: var(--vermilion); font-size: 0.8rem; }
+      .dash { width: 34px; height: 1.5px; background: var(--rule-firm); }
+      h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-top: 0.7rem; }
+      .card-text { color: var(--muted); margin-top: 0.9rem; max-width: 60ch; }
+
+      .chips {
+        list-style: none;
+        padding: 0;
+        margin-top: 1.6rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        border: 1.5px solid var(--rule-firm);
+      }
+      .chips li {
+        font-weight: 700;
+        font-size: 0.92rem;
+        letter-spacing: 0;
+        padding: 0.85rem 1.1rem;
+        border-right: 1.5px solid var(--rule-firm);
+        border-bottom: 1.5px solid var(--rule-firm);
+      }
+
+      .card-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.3rem;
+        flex-wrap: wrap;
+        margin-top: 1.7rem;
+      }
+      .meta {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 0.68rem;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--muted-soft);
+      }
+
+      /* Capped rather than left to fill the column: the source is 640×1391,
+         and at full column width it dictates the card's height and strands
+         the copy in a tall empty box beside it. */
+      .shot {
+        position: relative;
+        max-width: 268px;
+        margin-inline: auto;
+        width: 100%;
+      }
+      .shot img { position: relative; border: 1.5px solid var(--ink); }
+      .shot-offset {
+        position: absolute;
+        inset: 18px -18px -18px 18px;
+        background: var(--vermilion);
+      }
+
+      .slot {
+        display: flex;
+        align-items: baseline;
+        gap: 1.6rem;
+        border: 1.5px dashed var(--rule-firm);
+        padding: clamp(1.3rem, 3vw, 2rem);
+        margin-top: 1.5rem;
+        color: var(--muted-soft);
+      }
+      .slot h3 { font-size: 1.25rem; color: var(--ink); margin-top: 0; }
+      .slot p { margin-top: 0.3rem; }
+
+      /* ---------- one person ---------- */
+      .person { background: var(--paper); padding-block: clamp(3.5rem, 7vw, 6rem); }
+      .person-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr);
+        gap: clamp(1.5rem, 5vw, 4rem);
+      }
+      .person-copy p { color: var(--muted); }
+      .person-copy .big {
+        font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+        color: var(--ink);
+        line-height: 1.45;
+      }
+      .person-copy p + p { margin-top: 1.2rem; }
+
+      /* ---------- data ---------- */
+      .data { background: var(--grape); color: var(--paper-lit); padding-block: clamp(3.5rem, 7vw, 6rem); }
+      .data h2 { margin-top: 0.9rem; }
+      .data-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+        gap: clamp(1.8rem, 5vw, 4rem);
+      }
+      .data-text { color: #e6dffa; }
+      .facts { margin-top: 2rem; }
+      .fact {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--grape-lit);
+      }
+      .fact:first-child { border-top: 1px solid var(--grape-lit); }
+      .fact dt { font-family: var(--display); font-weight: 700; font-size: 0.95rem; }
+      .fact dd { color: var(--lilac); }
+
+      /* ---------- footer ---------- */
+      .foot { background: var(--ink); color: var(--paper-warm); padding-block: clamp(3rem, 5vw, 4.5rem); }
+      .foot-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(1.5rem, 4vw, 3rem);
+      }
+      .foot-mark { font-size: 1.6rem; }
+      .foot-tag { color: var(--muted-soft); margin-top: 0.4rem; }
+      .foot-link { font-family: var(--display); font-weight: 700; margin-top: 0.8rem; }
+      .foot-link a { text-decoration: none; }
+      .foot-link a:hover { color: var(--vermilion); }
+      .foot-sub { color: var(--muted-soft); font-size: 0.9rem; margin-top: 0.25rem; }
+      .copyright {
+        margin-top: 2.5rem;
+        padding-top: 1.3rem;
+        border-top: 1px solid #3b322c;
+        color: var(--muted-soft);
+        font-size: 0.85rem;
+      }
+
+      /* ---------- responsive ---------- */
+      @media (max-width: 900px) {
+        .hero-inner,
+        .card,
+        .person-inner,
+        .data-inner,
+        .foot-grid { grid-template-columns: minmax(0, 1fr); }
+        .hero-art { order: -1; min-height: 200px; }
+        .ink-vermilion { width: 190px; height: 190px; top: 0; right: -40px; }
+        .ink-grape { width: 160px; height: 160px; top: 45px; right: 90px; }
+        .shot { max-width: 320px; margin-inline: auto; }
+        .person h2 { margin-bottom: 1rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; transition: none !important; }
+      }
+    </style>
+  </body>
+</html>
