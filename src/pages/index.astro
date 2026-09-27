@@ -20,10 +20,10 @@ const whoFacts = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pretty Good Software — small apps, tailored to you</title>
+    <title>Pretty Good Software, small apps, tailored to you</title>
     <meta
       name="description"
-      content="A one-person software company. Small, sharp tools shaped around one person and the job in front of them — made to be used and finished, not to keep you coming back."
+      content="A one-person software company. Small, sharp tools shaped around one person and the job in front of them, made to be used and finished, not to keep you coming back."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -40,7 +40,7 @@ const whoFacts = [
     <meta property="og:image" content="https://prettygoodsoftware.llc/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Pretty Good Software — two overlapping ink circles" />
+    <meta property="og:image:alt" content="Pretty Good Software, two overlapping ink circles" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://prettygoodsoftware.llc/og.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -48,7 +48,7 @@ const whoFacts = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -58,12 +58,14 @@ const whoFacts = [
       <nav class="nav">
         <a class="wordmark" href="/">
           <!-- The mark, inline: lens drawn explicitly rather than blended, so
-               it renders identically everywhere (same trick as the favicon). -->
-          <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
-            <clipPath id="mlens"><circle cx="26" cy="39" r="17" /></clipPath>
-            <circle cx="40" cy="26" r="20" fill="#E14424" />
-            <circle cx="26" cy="39" r="17" fill="#4B3A8C" />
-            <circle cx="40" cy="26" r="20" fill="#420F13" clip-path="url(#mlens)" />
+               it renders identically everywhere (same trick as the favicon).
+               Geometry per the design system: two r=30 circles on a 100
+               grid, grape at (40,60), vermilion at (60,40). -->
+          <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+            <clipPath id="mlens"><circle cx="40" cy="60" r="30" /></clipPath>
+            <circle cx="40" cy="60" r="30" fill="#4B3A8C" />
+            <circle cx="60" cy="40" r="30" fill="#E14424" />
+            <circle cx="60" cy="40" r="30" fill="#420F13" clip-path="url(#mlens)" />
           </svg>
           Pretty Good Software
         </a>
@@ -124,11 +126,21 @@ const whoFacts = [
               <span class="dash" aria-hidden="true"></span>
               For physical therapists
             </p>
-            <h3>Pretty Good Video Coaching</h3>
+            <h3>
+              <!-- The product's plain mark: same geometry as the studio mark,
+                   teal replacing vermilion as Video Coaching's own ink. -->
+              <svg class="card-mark" viewBox="0 0 100 100" aria-hidden="true">
+                <clipPath id="cardlens"><circle cx="40" cy="60" r="30" /></clipPath>
+                <circle cx="40" cy="60" r="30" fill="#4B3A8C" />
+                <circle cx="60" cy="40" r="30" fill="#0E8C86" />
+                <circle cx="60" cy="40" r="30" fill="#04204A" clip-path="url(#cardlens)" />
+              </svg>
+              Pretty Good Video Coaching
+            </h3>
             <p class="card-text">
               An iPhone app for reviewing how a client moves. Step through a clip
-              one frame at a time, measure joint angles directly on the video —
-              or switch on the skeleton and let it follow the joints for you — and
+              one frame at a time, measure joint angles directly on the video,
+              or switch on the skeleton and let it follow the joints for you, and
               record your analysis out loud while you point at what matters. When
               you're finished, the app puts it together as a PDF report the client
               can take home. It all happens on the phone that recorded the clip.
@@ -139,7 +151,7 @@ const whoFacts = [
             </ul>
 
             <p class="card-privacy">
-              No accounts, no cloud sync, no analytics — clips, notes, and the
+              No accounts, no cloud sync, no analytics. Clips, notes, and the
               reports you make from them stay on the phone that recorded them.
               There is no server for them to go to.
             </p>
@@ -184,7 +196,7 @@ const whoFacts = [
             That's how I started programming, and it's still the motive. By day
             I lead an engineering team on a large backoffice/accounting
             application. I'm
-            Thomas Horn — I design these apps, write the code, and answer the
+            Thomas Horn, I design these apps, write the code, and answer the
             email.
           </p>
         </div>
@@ -204,7 +216,7 @@ const whoFacts = [
           </p>
           <p class="data-text">
             The only costs in a company like this are building and maintaining
-            the apps — there is no ad spend to recoup and no growth target to
+            the apps. There is no ad spend to recoup and no growth target to
             hit. So I choose what to work on by whether the problem is
             interesting and worth solving properly, not by the size of the
             audience.
@@ -264,8 +276,13 @@ const whoFacts = [
         --rule: #dcceb6;
         --rule-firm: #c7b79e;
 
+        /* Product ink for Video Coaching, the one card here that owns it. */
+        --teal: #0e8c86;
+        --overprint-teal: #04204a;
+
         --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
         --body: 'Newsreader', ui-serif, Georgia, serif;
+        --mono: 'IBM Plex Mono', ui-monospace, monospace;
         --gut: clamp(1.5rem, 5vw, 5rem);
       }
 
@@ -303,8 +320,8 @@ const whoFacts = [
       }
 
       .eyebrow {
-        font-family: var(--display);
-        font-weight: 700;
+        font-family: var(--mono);
+        font-weight: 500;
         font-size: 0.7rem;
         letter-spacing: 0.14em;
         text-transform: uppercase;
@@ -336,8 +353,8 @@ const whoFacts = [
       .mark { width: 26px; height: 26px; }
       .nav-links { display: flex; gap: 1.5rem; }
       .nav-links a {
-        font-family: var(--display);
-        font-weight: 600;
+        font-family: var(--mono);
+        font-weight: 500;
         font-size: 0.72rem;
         letter-spacing: 0.14em;
         text-transform: uppercase;
@@ -458,16 +475,21 @@ const whoFacts = [
         display: flex;
         align-items: center;
         gap: 0.9rem;
-        font-family: var(--display);
-        font-weight: 700;
+        font-family: var(--mono);
+        font-weight: 500;
         font-size: 0.7rem;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--muted-soft);
       }
+      /* This card's own num is teal, the product's ink, not the studio's
+         vermilion — the "Nothing here yet" slot below keeps the neutral
+         default since it belongs to no product yet. */
       .num { color: var(--vermilion); font-size: 0.8rem; }
+      .card .num { color: var(--teal); }
       .dash { width: 34px; height: 1.5px; background: var(--rule-firm); }
-      h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-top: 0.7rem; }
+      h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-top: 0.7rem; display: flex; align-items: center; gap: 0.7rem; }
+      .card-mark { width: 32px; height: 32px; flex: none; }
       .card-text { color: var(--muted); margin-top: 0.9rem; max-width: 60ch; }
 
       .chips {
@@ -504,8 +526,8 @@ const whoFacts = [
         margin-top: 1.7rem;
       }
       .meta {
-        font-family: var(--display);
-        font-weight: 600;
+        font-family: var(--mono);
+        font-weight: 500;
         font-size: 0.68rem;
         letter-spacing: 0.13em;
         text-transform: uppercase;
@@ -522,10 +544,13 @@ const whoFacts = [
         width: 100%;
       }
       .shot img { position: relative; border: 1.5px solid var(--ink); }
+      /* Teal, not vermilion: this block sits behind the Video Coaching
+         screenshot, so it carries the product's own ink rather than the
+         studio's. */
       .shot-offset {
         position: absolute;
         inset: 18px -18px -18px 18px;
-        background: var(--vermilion);
+        background: var(--teal);
       }
 
       .slot {
