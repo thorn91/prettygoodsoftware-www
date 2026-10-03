@@ -48,7 +48,7 @@ const whoFacts = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=Petrona:ital,wght@0,300..600;1,300..500&family=Azeret+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -94,7 +94,7 @@ const whoFacts = [
               See what I'm building <span aria-hidden="true">→</span>
             </a>
             <p class="hero-write">
-              or write to
+              or write to{' '}
               <a href="mailto:tom@prettygoodsoftware.llc">tom@prettygoodsoftware.llc</a>
             </p>
           </div>
@@ -263,26 +263,26 @@ const whoFacts = [
 
     <style is:global>
       :root {
-        --paper: #f3ebda;
-        --paper-lit: #fdf7ec;
-        --paper-warm: #f6efe0;
+        --paper: #ecebe5;
+        --paper-lit: #f6f5f1;
+        --paper-warm: #f3f2ed;
         --ink: #241e1a;
         --vermilion: #e14424;
         --grape: #4b3a8c;
         --grape-lit: #6e5eab;
         --lilac: #c4b6ee;
-        --muted: #6b5f55;
-        --muted-soft: #8c8074;
-        --rule: #dcceb6;
-        --rule-firm: #c7b79e;
+        --muted: #5f5a53;
+        --muted-soft: #6e6960;
+        --rule: #c9c3b8;
+        --rule-firm: #b5afa3;
 
         /* Product ink for Video Coaching, the one card here that owns it. */
         --teal: #0e8c86;
         --overprint-teal: #04204a;
 
-        --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
-        --body: 'Newsreader', ui-serif, Georgia, serif;
-        --mono: 'IBM Plex Mono', ui-monospace, monospace;
+        --display: 'Familjen Grotesk', ui-sans-serif, system-ui, sans-serif;
+        --body: 'Petrona', ui-serif, Georgia, serif;
+        --mono: 'Azeret Mono', ui-monospace, monospace;
         --gut: clamp(1.5rem, 5vw, 5rem);
       }
 
@@ -315,7 +315,7 @@ const whoFacts = [
 
       h1, h2, h3, .wordmark, .btn, .chips li, .foot-mark, .num {
         font-family: var(--display);
-        font-weight: 800;
+        font-weight: 700;
         letter-spacing: -0.02em;
       }
 
@@ -645,7 +645,7 @@ const whoFacts = [
           top: 188px;
           right: 34px;
           font-family: var(--display);
-          font-weight: 800;
+          font-weight: 700;
           font-size: 19px;
           letter-spacing: -0.01em;
           line-height: 1.08;

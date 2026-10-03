@@ -4,7 +4,7 @@
        (vermilion clipped by the grape circle, filled with the multiplied
        color) because favicon renderers cannot be trusted with
        mix-blend-mode. -->
-  <rect width="100" height="100" fill="#F3EBDA"/>
+  <rect width="100" height="100" fill="#ECEBE5"/>
   <clipPath id="lens"><circle cx="40" cy="60" r="30"/></clipPath>
   <circle cx="40" cy="60" r="30" fill="#4B3A8C"/>
   <circle cx="60" cy="40" r="30" fill="#E14424"/>
