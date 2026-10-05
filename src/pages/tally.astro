@@ -1,9 +1,9 @@
 ---
 const steps = [
-  ['typing', 'Type the meal as you would say it.', 'The input with a meal half typed.'],
-  ['guessed', 'Each food comes back with a calorie range. An amount Tally guessed is marked.', 'A new meal answered with a range and "2 amounts guessed".'],
-  ['question', 'When a guess would change your day, Tally asks. One tap answers.', 'Each guessed food with its question and the amounts to pick from.'],
-  ['meal-open', 'Open a meal to see each food on its own. A portion you corrected says so.', 'A meal opened: eggs, toast and butter, two of them marked "fixed by you".'],
+  ['typing', 'Type the meal as you would say it.', 'The What did you eat field with a meal half typed and the keyboard up.'],
+  ['log', "Each meal gets a short title and one calorie number, the one the day's total uses.", 'The Log tab with three meal cards, each with a short title and one calorie number.'],
+  ['meal-open', 'Open a meal to see each food on its own row. When Tally guessed an amount, it asks one question under the row. Its own guess is the dashed button marked “guess”.', 'A nachos meal opened: a food question with a dashed guess button, and a question about how much guacamole.'],
+  ['portion', 'To change an amount, open the portion sheet. The calorie range appears here, with “Why this range” underneath.', 'The portion sheet for guacamole: a slider, household measures, and Why this range underneath.'],
 ];
 ---
 
@@ -15,7 +15,7 @@ const steps = [
     <title>Tally, by Pretty Good Software</title>
     <meta
       name="description"
-      content="An iPhone app for logging meals. Type what you ate the way you would say it; Tally finds each food in USDA nutrition data, guesses the portion, and shows a range."
+      content="An iPhone app for logging meals. Type what you ate the way you would say it; Tally finds each food in USDA nutrition data, guesses the portion, and asks when a guess could change your day."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -24,7 +24,7 @@ const steps = [
     <meta property="og:title" content="Tally" />
     <meta
       property="og:description"
-      content="Type what you ate the way you would say it. Every food comes back as a range."
+      content="Type what you ate the way you would say it. Tally asks when a guess could change your day."
     />
     <meta property="og:url" content="https://prettygoodsoftware.llc/tally" />
     <meta property="og:image" content="https://prettygoodsoftware.llc/og.png" />
@@ -79,7 +79,8 @@ const steps = [
           </h1>
           <p class="lede">
             Type what you ate the way you would say it. Tally finds each food in
-            USDA nutrition data, guesses the portion, and shows you a range.
+            USDA nutrition data, guesses the portion, and asks when a guess could
+            change your day.
           </p>
           <p class="meta">iPhone · iOS 17+ · by Pretty Good Software</p>
         </div>
@@ -88,8 +89,8 @@ const steps = [
           <img
             src="/img/tally/question.png"
             width="800"
-            height="1734"
-            alt="A logged meal with each guessed food showing its question and the amounts to pick from."
+            height="1739"
+            alt="A logged meal of nachos with cheese and guacamole, each food with its question and answer buttons."
           />
         </div>
       </div>
@@ -104,7 +105,7 @@ const steps = [
               <li class="step">
                 <div class="shot">
                   <div class="shot-offset" aria-hidden="true" />
-                  <img src={`/img/tally/${file}.png`} width="800" height="1734" alt={alt} loading="lazy" />
+                  <img src={`/img/tally/${file}.png`} width="800" height="1739" alt={alt} loading="lazy" />
                 </div>
                 <p class="step-num">0{i + 1}</p>
                 <p class="step-text">{text}</p>
@@ -112,8 +113,34 @@ const steps = [
             ))
           }
         </ol>
+        <p class="steps-note">
+          Tally also asks which food you meant when the matching foods in the
+          USDA search would differ by 50 kcal or more at the amount you logged.
+        </p>
       </div>
     </section>
+
+    <section class="review">
+      <div class="inner review-inner">
+        <div class="review-copy">
+          <h2>Review</h2>
+          <p>
+            Review lists the foods where Tally's guess could move your week.
+            Until you settle one, the estimate still counts.
+          </p>
+          <p>
+            Tap a size to answer a question and the row becomes yours, or use
+            “Tell Tally” to re-ask in your own words.
+          </p>
+        </div>
+        <div class="shot shot-review">
+          <div class="shot-offset" aria-hidden="true"></div>
+          <img src="/img/tally/review.png" width="800" height="1739" alt="The Review tab: a guacamole question with amount buttons, then a Needs you list of four rows." loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <div class="inner"><hr class="rule" /></div>
 
     <section class="week">
       <div class="inner week-inner">
@@ -125,22 +152,18 @@ const steps = [
             that.
           </p>
           <p>
-            Each day opens on its own: the day's range, then the meals that
-            still need a look above the ones that are settled.
+            Each day opens on its own: the day's total as one number, then the
+            meals that still need a look above the ones that are settled.
           </p>
         </div>
         <div class="trio">
           <div class="shot">
             <div class="shot-offset" aria-hidden="true"></div>
-            <img src="/img/tally/week.png" width="800" height="1734" alt="The week: a ring with the seven-day total and its range, the pace line, macros, and seven small day rings." loading="lazy" />
+            <img src="/img/tally/week.png" width="800" height="1734" alt="The week: a ring with the seven-day total, the pace line, macros, and seven small day rings." loading="lazy" />
           </div>
           <div class="shot">
             <div class="shot-offset" aria-hidden="true"></div>
             <img src="/img/tally/day-rings.png" width="800" height="1734" alt="The day row on the week screen, with a calorie figure under each logged day." loading="lazy" />
-          </div>
-          <div class="shot">
-            <div class="shot-offset" aria-hidden="true"></div>
-            <img src="/img/tally/day.png" width="800" height="1734" alt="One day opened: its range, then the meals to look at above the settled ones." loading="lazy" />
           </div>
         </div>
       </div>
@@ -151,29 +174,25 @@ const steps = [
         <div class="pair">
           <div class="shot">
             <div class="shot-offset" aria-hidden="true"></div>
-            <img src="/img/tally/portion.png" width="800" height="1734" alt="The portion sheet: a slider in grams, household measures as chips, the amount drawn as decks of cards." loading="lazy" />
-          </div>
-          <div class="shot">
-            <div class="shot-offset" aria-hidden="true"></div>
             <img src="/img/tally/measures.png" width="800" height="1734" alt="The portion sheet on toast, with cubic inch, snack slice and slice as measures." loading="lazy" />
           </div>
         </div>
         <div class="fix-copy">
-          <h2>Ranges and corrections</h2>
+          <h2>Corrections and the range</h2>
           <p>
-            Every number is a range, because the portion is a guess. The portion
-            sheet shows the household measures USDA knows for the food, a slider
-            in grams, and the amount drawn out.
+            Rows and cards show one number. The range appears on the portion
+            sheet, with “Why this range” underneath. The sheet shows the household
+            measures USDA knows for the food, a slider in grams, and the amount
+            drawn out.
           </p>
           <p>
-            The text you typed is never changed. Corrections sit in a separate
-            layer on top of it, and each one says who made it.
+            Tally keeps the text you typed as you typed it. Corrections sit in a
+            separate layer on top of it, and each one says who made it.
           </p>
           <h2 class="h2-account">Account</h2>
           <p>
             Tally needs an account: an email and a password. Your meals are
-            stored under that account, and the text is kept exactly as you
-            typed it.
+            stored under that account, and the text stays as you typed it.
           </p>
         </div>
       </div>
@@ -371,6 +390,18 @@ const steps = [
         margin-top: 1.6rem;
       }
       .step-text { color: var(--ink); margin-top: 0.4rem; max-width: 30ch; }
+      .steps-note { margin-top: 3rem; max-width: 60ch; }
+
+      /* ---------- review ---------- */
+      .review { background: var(--paper); padding-top: clamp(3.5rem, 7vw, 6rem); padding-bottom: clamp(2rem, 4vw, 3rem); }
+      .review-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(1.8rem, 5vw, 4rem);
+        align-items: center;
+      }
+      .shot-review { max-width: 300px; }
+      .rule { border: 0; border-top: 1px solid var(--rule); }
 
       /* ---------- the week ---------- */
       .week { background: var(--paper); padding-block: clamp(3.5rem, 7vw, 6rem); }
@@ -380,15 +411,15 @@ const steps = [
         gap: clamp(1.8rem, 5vw, 4rem);
         align-items: center;
       }
-      .week-copy p, .fix-copy p { color: var(--muted); margin-top: 1rem; max-width: 46ch; }
+      .week-copy p, .fix-copy p, .review-copy p { color: var(--muted); margin-top: 1rem; max-width: 46ch; }
       .trio {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: clamp(1.2rem, 2.5vw, 2rem);
       }
       .trio .shot { max-width: 220px; }
 
-      /* ---------- ranges and corrections ---------- */
+      /* ---------- corrections and the range ---------- */
       .fix { background: var(--paper-warm); padding-block: clamp(3.5rem, 7vw, 6rem); }
       .fix-inner {
         display: grid;
@@ -398,7 +429,7 @@ const steps = [
       }
       .pair {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
         gap: clamp(1.2rem, 2.5vw, 2rem);
       }
       .pair .shot { max-width: 240px; }
@@ -427,7 +458,7 @@ const steps = [
 
       /* ---------- responsive ---------- */
       @media (max-width: 900px) {
-        .hero-inner, .week-inner, .fix-inner, .foot-grid { grid-template-columns: minmax(0, 1fr); }
+        .hero-inner, .review-inner, .week-inner, .fix-inner, .foot-grid { grid-template-columns: minmax(0, 1fr); }
         .shot-hero { max-width: 280px; margin-top: 1rem; }
         .step-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .step .shot, .trio .shot, .pair .shot { max-width: none; }
