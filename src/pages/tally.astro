@@ -1,0 +1,448 @@
+---
+const steps = [
+  ['typing', 'Type the meal as you would say it.', 'The input with a meal half typed.'],
+  ['guessed', 'Each food comes back with a calorie range. An amount Tally guessed is marked.', 'A new meal answered with a range and "2 amounts guessed".'],
+  ['question', 'When a guess would change your day, Tally asks. One tap answers.', 'Each guessed food with its question and the amounts to pick from.'],
+  ['meal-open', 'Open a meal to see each food on its own. A portion you corrected says so.', 'A meal opened: eggs, toast and butter, two of them marked "fixed by you".'],
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tally, by Pretty Good Software</title>
+    <meta
+      name="description"
+      content="An iPhone app for logging meals. Type what you ate the way you would say it; Tally finds each food in USDA nutrition data, guesses the portion, and shows a range."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pretty Good Software" />
+    <meta property="og:title" content="Tally" />
+    <meta
+      property="og:description"
+      content="Type what you ate the way you would say it. Every food comes back as a range."
+    />
+    <meta property="og:url" content="https://prettygoodsoftware.llc/tally" />
+    <meta property="og:image" content="https://prettygoodsoftware.llc/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Pretty Good Software, two overlapping ink circles" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://prettygoodsoftware.llc/og.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=Petrona:ital,wght@0,300..600;1,300..500&family=Azeret+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="nav-wrap">
+      <nav class="nav">
+        <a class="wordmark" href="/">
+          <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+            <clipPath id="mlens"><circle cx="40" cy="60" r="30" /></clipPath>
+            <circle cx="40" cy="60" r="30" fill="#4B3A8C" />
+            <circle cx="60" cy="40" r="30" fill="#E14424" />
+            <circle cx="60" cy="40" r="30" fill="#420F13" clip-path="url(#mlens)" />
+          </svg>
+          Pretty Good Software
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="mailto:tom@prettygoodsoftware.llc">Email</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="inner hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow eyebrow-tally">An iPhone app</p>
+          <h1>
+            <!-- The product mark: same geometry as the studio mark, Tally's
+                 green replacing vermilion, the lens their multiply. -->
+            <svg class="hero-mark" viewBox="0 0 100 100" aria-hidden="true">
+              <clipPath id="tlens"><circle cx="40" cy="60" r="30" /></clipPath>
+              <circle cx="40" cy="60" r="30" fill="#4B3A8C" />
+              <circle cx="60" cy="40" r="30" fill="#3F6E2B" />
+              <circle cx="60" cy="40" r="30" fill="#131918" clip-path="url(#tlens)" />
+            </svg>
+            Tally
+          </h1>
+          <p class="lede">
+            Type what you ate the way you would say it. Tally finds each food in
+            USDA nutrition data, guesses the portion, and shows you a range.
+          </p>
+          <p class="meta">iPhone · iOS 17+ · by Pretty Good Software</p>
+        </div>
+        <div class="shot shot-hero">
+          <div class="shot-offset" aria-hidden="true"></div>
+          <img
+            src="/img/tally/question.png"
+            width="800"
+            height="1734"
+            alt="A logged meal with each guessed food showing its question and the amounts to pick from."
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="steps">
+      <div class="inner">
+        <h2>Logging a meal</h2>
+        <ol class="step-grid">
+          {
+            steps.map(([file, text, alt], i) => (
+              <li class="step">
+                <div class="shot">
+                  <div class="shot-offset" aria-hidden="true" />
+                  <img src={`/img/tally/${file}.png`} width="800" height="1734" alt={alt} loading="lazy" />
+                </div>
+                <p class="step-num">0{i + 1}</p>
+                <p class="step-text">{text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="week">
+      <div class="inner week-inner">
+        <div class="week-copy">
+          <h2>The week</h2>
+          <p>
+            Your balance is a rolling seven-day total, not a daily score. Seven
+            days is the cap; a surplus or deficit is not spread further than
+            that.
+          </p>
+          <p>
+            Each day opens on its own: the day's range, then the meals that
+            still need a look above the ones that are settled.
+          </p>
+        </div>
+        <div class="trio">
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/week.png" width="800" height="1734" alt="The week: a ring with the seven-day total and its range, the pace line, macros, and seven small day rings." loading="lazy" />
+          </div>
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/day-rings.png" width="800" height="1734" alt="The day row on the week screen, with a calorie figure under each logged day." loading="lazy" />
+          </div>
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/day.png" width="800" height="1734" alt="One day opened: its range, then the meals to look at above the settled ones." loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="fix">
+      <div class="inner fix-inner">
+        <div class="pair">
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/portion.png" width="800" height="1734" alt="The portion sheet: a slider in grams, household measures as chips, the amount drawn as decks of cards." loading="lazy" />
+          </div>
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/measures.png" width="800" height="1734" alt="The portion sheet on toast, with cubic inch, snack slice and slice as measures." loading="lazy" />
+          </div>
+        </div>
+        <div class="fix-copy">
+          <h2>Ranges and corrections</h2>
+          <p>
+            Every number is a range, because the portion is a guess. The portion
+            sheet shows the household measures USDA knows for the food, a slider
+            in grams, and the amount drawn out.
+          </p>
+          <p>
+            The text you typed is never changed. Corrections sit in a separate
+            layer on top of it, and each one says who made it.
+          </p>
+          <h2 class="h2-account">Account</h2>
+          <p>
+            Tally needs an account: an email and a password. Your meals are
+            stored under that account, and the text is kept exactly as you
+            typed it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="inner">
+        <div class="foot-grid">
+          <div>
+            <p class="foot-mark">Pretty Good Software</p>
+            <p class="foot-tag">Small apps, shaped around the person using them.</p>
+          </div>
+          <div>
+            <p class="eyebrow eyebrow-light">Apps</p>
+            <p class="foot-link"><a href="/tally">Tally</a></p>
+            <p class="foot-link">
+              <a href="https://coaching.prettygoodsoftware.llc">Pretty Good Video Coaching</a>
+            </p>
+          </div>
+          <div>
+            <p class="eyebrow eyebrow-light">Contact</p>
+            <p class="foot-link">
+              <a href="mailto:tom@prettygoodsoftware.llc">tom@prettygoodsoftware.llc</a>
+            </p>
+          </div>
+        </div>
+        <p class="copyright">© 2026 Pretty Good Software LLC</p>
+      </div>
+    </footer>
+
+    <style is:global>
+      :root {
+        --paper: #ecebe5;
+        --paper-lit: #f6f5f1;
+        --paper-warm: #f3f2ed;
+        --ink: #241e1a;
+        --vermilion: #e14424;
+        --grape: #4b3a8c;
+        --grape-lit: #6e5eab;
+        --lilac: #c4b6ee;
+        --muted: #5f5a53;
+        --muted-soft: #6e6960;
+        --rule: #c9c3b8;
+        --rule-firm: #b5afa3;
+
+        /* Product ink for Tally: the app's own green. 5.5:1 on paper, so it
+           holds as text too. Overprint is grape multiplied by green. */
+        --tally: #3f6e2b;
+        --overprint-tally: #131918;
+
+        --display: 'Familjen Grotesk', ui-sans-serif, system-ui, sans-serif;
+        --body: 'Petrona', ui-serif, Georgia, serif;
+        --mono: 'Azeret Mono', ui-monospace, monospace;
+        --gut: clamp(1.5rem, 5vw, 5rem);
+      }
+
+      *,
+      *::before,
+      *::after { box-sizing: border-box; }
+      * { margin: 0; }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img { display: block; max-width: 100%; height: auto; }
+      a { color: inherit; }
+      ol { list-style: none; padding: 0; }
+
+      .inner {
+        max-width: 1180px;
+        margin-inline: auto;
+        padding-inline: var(--gut);
+      }
+
+      h1, h2, .wordmark, .foot-mark, .step-num {
+        font-family: var(--display);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .eyebrow {
+        font-family: var(--mono);
+        font-weight: 500;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-soft);
+      }
+      .eyebrow-tally { color: var(--tally); }
+      .eyebrow-light { color: var(--lilac); }
+      .meta {
+        font-family: var(--mono);
+        font-weight: 500;
+        font-size: 0.68rem;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--muted-soft);
+      }
+
+      /* ---------- nav, same as the home page ---------- */
+      .nav-wrap { background: var(--paper); }
+      .nav {
+        max-width: 1180px;
+        margin-inline: auto;
+        padding: 1.6rem var(--gut) 1.1rem;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1.5px solid var(--ink);
+        flex-wrap: wrap;
+      }
+      .wordmark {
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .mark { width: 26px; height: 26px; }
+      .nav-links { display: flex; gap: 1.5rem; }
+      .nav-links a {
+        font-family: var(--mono);
+        font-weight: 500;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .nav-links a:hover { color: var(--tally); }
+
+      /* ---------- hero ---------- */
+      .hero { background: var(--paper); }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+        gap: clamp(1.5rem, 4vw, 4rem);
+        align-items: center;
+        padding-top: clamp(3rem, 6vw, 5rem);
+        padding-bottom: clamp(3.5rem, 7vw, 6rem);
+      }
+      .hero-copy { max-width: 46ch; }
+      h1 {
+        font-size: clamp(2.6rem, 5.1vw, 4.3rem);
+        line-height: 1;
+        margin-top: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.35em;
+      }
+      .hero-mark { width: 0.85em; height: 0.85em; flex: none; }
+      .lede {
+        font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+        color: var(--muted);
+        margin-top: 1.6rem;
+        max-width: 46ch;
+      }
+      .hero-copy .meta { margin-top: 2rem; }
+
+      /* The screenshot and its hard offset block in the product ink, as on
+         the home page's Video Coaching card. */
+      .shot {
+        position: relative;
+        width: 100%;
+        margin-inline: auto;
+      }
+      .shot img { position: relative; border: 1.5px solid var(--ink); }
+      .shot-offset {
+        position: absolute;
+        inset: 18px -18px -18px 18px;
+        background: var(--tally);
+      }
+      .shot-hero { max-width: 300px; }
+
+      /* ---------- logging a meal ---------- */
+      .steps { background: var(--paper-warm); padding-block: clamp(3rem, 6vw, 5rem); }
+      h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); line-height: 1.05; }
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+        margin-top: 2rem;
+      }
+      .step .shot { max-width: 240px; }
+      .step-num {
+        color: var(--tally);
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        margin-top: 1.6rem;
+      }
+      .step-text { color: var(--ink); margin-top: 0.4rem; max-width: 30ch; }
+
+      /* ---------- the week ---------- */
+      .week { background: var(--paper); padding-block: clamp(3.5rem, 7vw, 6rem); }
+      .week-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+        gap: clamp(1.8rem, 5vw, 4rem);
+        align-items: center;
+      }
+      .week-copy p, .fix-copy p { color: var(--muted); margin-top: 1rem; max-width: 46ch; }
+      .trio {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(1.2rem, 2.5vw, 2rem);
+      }
+      .trio .shot { max-width: 220px; }
+
+      /* ---------- ranges and corrections ---------- */
+      .fix { background: var(--paper-warm); padding-block: clamp(3.5rem, 7vw, 6rem); }
+      .fix-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: clamp(1.8rem, 5vw, 4rem);
+        align-items: center;
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(1.2rem, 2.5vw, 2rem);
+      }
+      .pair .shot { max-width: 240px; }
+      .h2-account { margin-top: 2.4rem; }
+
+      /* ---------- footer, same as the home page ---------- */
+      .foot { background: var(--ink); color: var(--paper-warm); padding-block: clamp(3rem, 5vw, 4.5rem); }
+      .foot-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(1.5rem, 4vw, 3rem);
+      }
+      .foot-mark { font-size: 1.6rem; }
+      .foot-tag { color: var(--muted-soft); margin-top: 0.4rem; }
+      .foot-link { font-family: var(--display); font-weight: 700; margin-top: 0.8rem; }
+      .foot-link a { text-decoration: none; }
+      .foot-link a:hover { color: var(--vermilion); }
+      .copyright {
+        margin-top: 2.5rem;
+        padding-top: 1.3rem;
+        border-top: 1px solid #3b322c;
+        color: var(--muted-soft);
+        font-size: 0.85rem;
+      }
+
+      /* ---------- responsive ---------- */
+      @media (max-width: 900px) {
+        .hero-inner, .week-inner, .fix-inner, .foot-grid { grid-template-columns: minmax(0, 1fr); }
+        .shot-hero { max-width: 280px; margin-top: 1rem; }
+        .step-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .step .shot, .trio .shot, .pair .shot { max-width: none; }
+        .week-inner .trio { order: 2; }
+        .fix-inner .pair { order: 2; }
+      }
+      @media (max-width: 520px) {
+        .step-grid { grid-template-columns: minmax(0, 1fr); }
+        .step .shot, .pair .shot { max-width: 280px; }
+        .trio { grid-template-columns: minmax(0, 1fr); }
+        .trio .shot { max-width: 280px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; transition: none !important; }
+      }
+    </style>
+  </body>
+</html>
