@@ -5,6 +5,12 @@ const steps = [
   ['meal-open', 'Open a meal to see each food on its own row. When Tally guessed an amount, it asks one question under the row. Its own guess is the dashed button marked “guess”.', 'A nachos meal opened: a food question with a dashed guess button, and a question about how much guacamole.'],
   ['portion', 'To change an amount, open the portion sheet. The calorie range appears here, with “Why this range” underneath.', 'The portion sheet for guacamole: a slider, household measures, and Why this range underneath.'],
 ];
+const recipeSteps = [
+  ['recipe-offer', 'Type a meal you settled before and Tally offers it back first: the same foods, the same amounts, one tap. Nothing is looked up again.', 'A typed burrito bowl answered with Same as Oct 4?, its three foods, and a Yes, same button.'],
+  ['recipe-save', 'Save any logged meal as a recipe. The recipe is a copy of its rows; changing it later leaves the logged meal as it was.', 'The Save as recipe sheet for a spaghetti dinner: name, category, and the four foods with grams and calories.'],
+  ['recipe-book', 'The book next to the input holds your recipes and a starter set built from USDA survey dishes. Pick half, one, two servings or grams.', 'The recipe book filtered to Dinner: a saved spaghetti dinner with half, one, two and grams, then starter recipes.'],
+  ['recipe-logged', 'A meal from last time or from a recipe says so on its card and has nothing left to review.', 'The Log with a burrito bowl marked same as Oct 4 and a spaghetti dinner marked your recipe.'],
+];
 ---
 
 <!DOCTYPE html>
@@ -119,6 +125,28 @@ const steps = [
         </p>
       </div>
     </section>
+
+    <section class="recipes">
+      <div class="inner">
+        <h2>Meals you eat again</h2>
+        <ol class="step-grid">
+          {
+            recipeSteps.map(([file, text, alt], i) => (
+              <li class="step">
+                <div class="shot">
+                  <div class="shot-offset" aria-hidden="true" />
+                  <img src={`/img/tally/${file}.png`} width="800" height="1739" alt={alt} loading="lazy" />
+                </div>
+                <p class="step-num">0{i + 1}</p>
+                <p class="step-text">{text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <div class="inner"><hr class="rule" /></div>
 
     <section class="review">
       <div class="inner review-inner">
@@ -390,6 +418,7 @@ const steps = [
         margin-top: 1.6rem;
       }
       .step-text { color: var(--ink); margin-top: 0.4rem; max-width: 30ch; }
+      .recipes { background: var(--paper); padding-block: clamp(3rem, 6vw, 5rem); }
       .steps-note { margin-top: 3rem; max-width: 60ch; }
 
       /* ---------- review ---------- */
