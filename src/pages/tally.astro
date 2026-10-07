@@ -2,13 +2,13 @@
 const steps = [
   ['typing', 'Type the meal as you would say it.', 'The What did you eat field with a meal half typed and the keyboard up.'],
   ['log', "Each meal gets a short title and one calorie number, the one the day's total uses.", 'The Log tab with three meal cards, each with a short title and one calorie number.'],
-  ['meal-open', 'Open a meal to see each food on its own row. When Tally guessed an amount, it asks one question under the row. Its own guess is the dashed button marked “guess”.', 'A nachos meal opened: a food question with a dashed guess button, and a question about how much guacamole.'],
+  ['meal-open', "Open a meal to see each food on its own row, with its amount beside its calories. When Tally guessed an amount, it asks one question under the row. Its guess is the filled button marked “Tally's guess”.", 'A nachos meal opened: which nachos with cheese, each answer with its calories, and a guacamole amount question, every row with its amount beside its calories.'],
   ['portion', 'To change an amount, open the portion sheet. The calorie range appears here, with “Why this range” underneath.', 'The portion sheet for guacamole: the amount as ¼ cup, a slider in cups, household measures, a measuring cup drawn to the amount, and Why this range underneath.'],
 ];
 const recipeSteps = [
-  ['recipe-offer', 'Type a meal you settled before and Tally offers it back first: the same foods, the same amounts, one tap. Nothing is looked up again.', 'A typed burrito bowl answered with Same as Oct 4?, its three foods, and a Yes, same button.'],
+  ['recipe-offer', 'Type a meal you settled before and Tally offers it back first: the same foods, the same amounts, one tap. Nothing is looked up again.', 'A typed burrito bowl answered with Same as Oct 4?, its four foods with calories, and a Yes, same button.'],
   ['recipe-save', 'Save any logged meal as a recipe. The recipe is a copy of its rows; changing it later leaves the logged meal as it was.', 'The Save as recipe sheet for a spaghetti dinner: name, category, and the four foods with amounts in cups and spoons and their calories.'],
-  ['recipe-book', 'The book next to the input holds your recipes and a starter set built from USDA survey dishes. Pick half, one, two servings or grams.', 'The recipe book filtered to Dinner: a saved spaghetti dinner with half, one, two and grams, then starter recipes.'],
+  ['recipe-book', 'The book next to the input holds your recipes and a starter set built from USDA survey dishes, each with its calories.', 'The recipe book: a saved spaghetti dinner, then starter recipes, each with its calories.'],
   ['recipe-logged', 'A meal from last time or from a recipe says so on its card and has nothing left to review.', 'The Log with a burrito bowl marked same as Oct 4 and a spaghetti dinner marked your recipe.'],
 ];
 ---
@@ -96,7 +96,7 @@ const recipeSteps = [
             src="/img/tally/question.png"
             width="800"
             height="1739"
-            alt="A logged meal of nachos with cheese and guacamole, each food with its question and answer buttons."
+            alt="A nachos meal with two amount questions, cheese sauce and guacamole, with Tally's guess filled green."
           />
         </div>
       </div>
@@ -122,6 +122,7 @@ const recipeSteps = [
         <p class="steps-note">
           Tally also asks which food you meant when the matching foods in the
           USDA search would differ by 50 cal or more at the amount you logged.
+          Each answer shows what it comes to in calories.
         </p>
       </div>
     </section>
@@ -157,13 +158,15 @@ const recipeSteps = [
             Until you settle one, the estimate still counts.
           </p>
           <p>
-            Tap a size to answer a question and the row becomes yours, or use
+            Open a row to see why Tally chose its amount and the range it could
+            be, such as 1¾ cups at 469–861 cal. The slider and sizes use the
+            row's own unit. Confirm settles the row and it becomes yours, or use
             “Tell Tally” to re-ask in your own words.
           </p>
         </div>
         <div class="shot shot-review">
           <div class="shot-offset" aria-hidden="true"></div>
-          <img src="/img/tally/review.png" width="800" height="1739" alt="The Review tab: a guacamole question with amount buttons, then a Needs you list of four rows." loading="lazy" />
+          <img src="/img/tally/review.png" width="800" height="1739" alt="The Review tab: the first row opened with Tally's reasoning, which-food answers with calories, a slider in cups, and Confirm." loading="lazy" />
         </div>
       </div>
     </section>
@@ -180,6 +183,11 @@ const recipeSteps = [
             that.
           </p>
           <p>
+            Under the ring, the balance gives tomorrow's budget: the daily
+            target adjusted by what the week has left over, and kept within a
+            quarter of the target either way.
+          </p>
+          <p>
             Each day opens on its own: the day's total as one number, then the
             meals that still need a look above the ones that are settled.
           </p>
@@ -187,11 +195,11 @@ const recipeSteps = [
         <div class="trio">
           <div class="shot">
             <div class="shot-offset" aria-hidden="true"></div>
-            <img src="/img/tally/week.png" width="800" height="1739" alt="The week: a ring with the seven-day total, the pace line, macros, and seven small day rings." loading="lazy" />
+            <img src="/img/tally/week.png" width="800" height="1739" alt="The balance: a ring with the seven-day total, 2,500 cal for tomorrow, macros, and seven day rings." loading="lazy" />
           </div>
           <div class="shot">
             <div class="shot-offset" aria-hidden="true"></div>
-            <img src="/img/tally/day-rings.png" width="800" height="1739" alt="One day opened from the week: the day's ring and total, then the meals that still need a look." loading="lazy" />
+            <img src="/img/tally/day-rings.png" width="800" height="1739" alt="One day opened from the week: the day's ring and total, then the meals to look at." loading="lazy" />
           </div>
         </div>
       </div>
@@ -204,15 +212,26 @@ const recipeSteps = [
             <div class="shot-offset" aria-hidden="true"></div>
             <img src="/img/tally/measures.png" width="800" height="1739" alt="The portion sheet on a ham sandwich: the amount as 1 regular, a slider in that unit, slider and regular as measures, and the amount drawn out." loading="lazy" />
           </div>
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/add-ingredient.png" width="800" height="1739" alt="Add an ingredient to a tuna salad sandwich: a USDA search for potato chips, each result with its calories per 100 g." loading="lazy" />
+          </div>
         </div>
         <div class="fix-copy">
           <h2>Corrections and the range</h2>
           <p>
-            Rows and cards show one number. The range appears on the portion
-            sheet, with “Why this range” underneath. The sheet shows the amount in
+            Each row shows its amount beside its calories, such as 1 slice,
+            1 tbsp or 2¾ cups. Cards show one number. The range appears in
+            Review and on the portion sheet, with “Why this range” underneath.
+            The sheet shows the amount in
             the unit a menu would use (ounces, cups, spoons or slices), a slider
             in that unit, the household measures USDA knows for the food, and the
             amount drawn out.
+          </p>
+          <p>
+            If you forgot a food, open the logged meal, tap Add and search USDA.
+            Pick the food and an amount. What you add is yours, so it skips
+            review.
           </p>
           <p>
             Tally keeps the text you typed as you typed it. Corrections sit in a
@@ -459,7 +478,7 @@ const recipeSteps = [
       }
       .pair {
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: clamp(1.2rem, 2.5vw, 2rem);
       }
       .pair .shot { max-width: 240px; }
