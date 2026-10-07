@@ -3,11 +3,11 @@ const steps = [
   ['typing', 'Type the meal as you would say it.', 'The What did you eat field with a meal half typed and the keyboard up.'],
   ['log', "Each meal gets a short title and one calorie number, the one the day's total uses.", 'The Log tab with three meal cards, each with a short title and one calorie number.'],
   ['meal-open', 'Open a meal to see each food on its own row. When Tally guessed an amount, it asks one question under the row. Its own guess is the dashed button marked “guess”.', 'A nachos meal opened: a food question with a dashed guess button, and a question about how much guacamole.'],
-  ['portion', 'To change an amount, open the portion sheet. The calorie range appears here, with “Why this range” underneath.', 'The portion sheet for guacamole: a slider, household measures, and Why this range underneath.'],
+  ['portion', 'To change an amount, open the portion sheet. The calorie range appears here, with “Why this range” underneath.', 'The portion sheet for guacamole: the amount as ¼ cup, a slider in cups, household measures, a measuring cup drawn to the amount, and Why this range underneath.'],
 ];
 const recipeSteps = [
   ['recipe-offer', 'Type a meal you settled before and Tally offers it back first: the same foods, the same amounts, one tap. Nothing is looked up again.', 'A typed burrito bowl answered with Same as Oct 4?, its three foods, and a Yes, same button.'],
-  ['recipe-save', 'Save any logged meal as a recipe. The recipe is a copy of its rows; changing it later leaves the logged meal as it was.', 'The Save as recipe sheet for a spaghetti dinner: name, category, and the four foods with grams and calories.'],
+  ['recipe-save', 'Save any logged meal as a recipe. The recipe is a copy of its rows; changing it later leaves the logged meal as it was.', 'The Save as recipe sheet for a spaghetti dinner: name, category, and the four foods with amounts in cups and spoons and their calories.'],
   ['recipe-book', 'The book next to the input holds your recipes and a starter set built from USDA survey dishes. Pick half, one, two servings or grams.', 'The recipe book filtered to Dinner: a saved spaghetti dinner with half, one, two and grams, then starter recipes.'],
   ['recipe-logged', 'A meal from last time or from a recipe says so on its card and has nothing left to review.', 'The Log with a burrito bowl marked same as Oct 4 and a spaghetti dinner marked your recipe.'],
 ];
@@ -202,16 +202,17 @@ const recipeSteps = [
         <div class="pair">
           <div class="shot">
             <div class="shot-offset" aria-hidden="true"></div>
-            <img src="/img/tally/measures.png" width="800" height="1739" alt="The portion sheet on a ham sandwich: a slider in grams, regular and large as measures, and the amount drawn out." loading="lazy" />
+            <img src="/img/tally/measures.png" width="800" height="1739" alt="The portion sheet on a ham sandwich: the amount as 1 regular, a slider in that unit, slider and regular as measures, and the amount drawn out." loading="lazy" />
           </div>
         </div>
         <div class="fix-copy">
           <h2>Corrections and the range</h2>
           <p>
             Rows and cards show one number. The range appears on the portion
-            sheet, with “Why this range” underneath. The sheet shows the household
-            measures USDA knows for the food, a slider in grams, and the amount
-            drawn out.
+            sheet, with “Why this range” underneath. The sheet shows the amount in
+            the unit a menu would use (ounces, cups, spoons or slices), a slider
+            in that unit, the household measures USDA knows for the food, and the
+            amount drawn out.
           </p>
           <p>
             Tally keeps the text you typed as you typed it. Corrections sit in a
