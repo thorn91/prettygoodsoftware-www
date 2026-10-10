@@ -1,30 +1,9 @@
 ---
 const H = 1734;
 const steps = [
-  ['typing', 'Type the meal as you would say it, or paste a recipe link. Chips above the box set when you ate it: Now, An hour ago, or a meal time like Lunch, 12:30 PM.', 'The What you ate, or a recipe link box with half a turkey sandwich and a cup of tomato typed. Chips above it ask When did you eat it?, with Lunch, 12:30 PM picked and 12:30 PM in the box.'],
-  ['log', "Each meal gets a short title and one calorie number, the one the day's total uses. The time you ate it shows in green on every card.", 'The Log: a burrito bowl at 12:30 PM, an apple with peanut butter at 3:50 PM and butter chicken at 4:53 PM from the page, each time in green with its calories on the right.'],
-  ['meal-open', 'Open a meal to see each food on its own row, with its amount beside its calories. An amount Tally guessed is tagged Tally guessed, with one question under the row. Edit meal sits below the foods.', 'Nachos with cheese and guacamole opened: which nachos with cheese, the guacamole amount tagged Tally guessed, and Edit meal.'],
-];
-const recipeSteps = [
-  ['link-paste', 'Paste a recipe page, with a note such as “had one bowl”. A line above the box names the site Tally will read.', 'A recipe link pasted with had one bowl; a line above the box says Tally will read the page on budgetbytes.com.'],
-  ['link-reading', "While it reads, the log shows Reading and the site's name.", 'Reading budgetbytes.com… on the Log, under the pasted link.'],
-  ['link-result', 'Tally logs your share from the page. The card says it came from the page, gives 468 cal a serving, and shows your share as ¼ of a recipe for 4.', 'Butter chicken at 7:24 PM, 468 cal, from the page, 468 cal a serving, your share ¼ of a recipe for 4.'],
-  ['link-unread', 'When Tally cannot read a page, it logs a guess from the link and says so on the card. Tap the card to set the calories if you know them.', "Big Mac at 7:26 PM, 535 cal: Couldn't read mcdonalds.com, so this is a guess from the link."],
-  ['recipe-offer', 'Type a meal you settled before and Tally offers it back first: the same foods, the same amounts, one tap. Nothing is looked up again.', 'A typed burrito bowl answered with Same as Oct 7?, its four foods with calories, and Yes, same · 490 cal.'],
-  ['recipe-save', 'Save a logged meal as a recipe. Servings it makes sets how many servings the recipe is, and the sheet says what one serving comes to. The recipe is a copy of its rows; changing it later leaves the logged meal as it was.', 'Save as recipe for butter chicken: Servings it makes 4, one serving 468 cal, whole recipe 1,872 cal, and the foods.'],
-  ['recipe-book', "The book next to the input holds your recipes and a starter set built from USDA survey dishes, each with its calories. A recipe that makes more than one serving shows one serving's calories.", 'Your recipes: butter chicken at 468 cal, makes 4, and a spaghetti dinner, then starter recipes with their calories.'],
-  ['recipe-logged', 'A meal from last time or from a recipe says so on its card and has nothing left to review.', 'The Log with a spaghetti dinner marked your recipe, nothing to review, and a burrito bowl marked same as Oct 7.'],
-];
-const weekShots = [
-  ['today', 'Balance on Today: a ring of four meals at the times they were eaten, 1,707 of 2,000 cal, 293 left today, then the meals.'],
-  ['week-nutrients', 'The Week side scrolled: the seven-day total of 14,757 cal, 757 over this week, averaging 2,108 a day, a ring for each day, then nutrients with sodium at 26,503 mg.'],
-  ['day-rings', "One day opened from the week: Monday's ring and 3,141 cal, then the meals to look at, each with its time."],
-];
-const fixShots = [
-  ['measures', 'The portion sheet for guacamole: 2¾ tbsp, tagged Tally guessed this amount with Why?, household measures, a slider in tablespoons and the spoons drawn.'],
-  ['edit-meal', 'Edit meal for nachos with cheese and guacamole: The total you know, a Bigger or smaller slider at 594 cal, Shared it? with All mine, ½, ⅓ and ¼, and the foods in this meal.'],
-  ['calories', 'The Values tab on the guacamole with 90 typed into Calories; protein and fat show the estimate in grey.'],
-  ['add-ingredient', 'Add an ingredient to nachos with cheese and guacamole: a USDA search for sour cream, each result with its calories per 100 g.'],
+  ['typing', 'Easy', 'One sentence per meal', 'Type it the way you would say it, or paste a recipe link. No searching, no scrolling, no scale.', 'Typing a slice of banana bread and a coffee with oat milk, with When did you eat it? chips above the box.'],
+  ['meal-open', 'Accurate', 'Every food matched to real nutrition data', 'Each food on the plate gets its own calories from a nutrition database. When Tally has to estimate, it tells you.', 'Nachos with cheese and guacamole opened: tortilla chips, cheddar and guacamole, each marked Tally guessed with a question and size chips.'],
+  ['review', 'Easy and accurate', 'Only check what could matter', 'When a portion is a guess big enough to move your day, Tally asks. Everything else is done.', 'Review: pho opened. No amount given, so Tally guessed 4 cups, 528 to 981 cal, and asks how big the bowl was.'],
 ];
 ---
 
@@ -36,7 +15,7 @@ const fixShots = [
     <title>Tally, by Pretty Good Software</title>
     <meta
       name="description"
-      content="An iPhone app for logging meals. Type what you ate the way you would say it, or paste a recipe link; Tally finds each food in USDA nutrition data, guesses the portion, and asks when a guess could change your day."
+      content="A calorie tracker for iPhone. Type what you ate in a sentence or scan a barcode; Tally looks up every food in real nutrition databases and tells you when it had to guess."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -45,7 +24,7 @@ const fixShots = [
     <meta property="og:title" content="Tally" />
     <meta
       property="og:description"
-      content="Type what you ate the way you would say it. Tally asks when a guess could change your day."
+      content="As quick as the AI apps. As accurate as the search ones."
     />
     <meta property="og:url" content="https://prettygoodsoftware.llc/tally" />
     <meta property="og:image" content="https://prettygoodsoftware.llc/og.png" />
@@ -86,217 +65,137 @@ const fixShots = [
     <section class="hero">
       <div class="inner hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow eyebrow-tally">An iPhone app</p>
-          <h1>
-            <!-- The product mark: same geometry as the studio mark, Tally's
-                 green replacing vermilion, the lens their multiply. -->
-            <svg class="hero-mark" viewBox="0 0 100 100" aria-hidden="true">
+          <p class="eyebrow eyebrow-tally eyebrow-mark">
+            <svg class="eyebrow-svg" viewBox="0 0 100 100" aria-hidden="true">
               <clipPath id="tlens"><circle cx="40" cy="60" r="30" /></clipPath>
               <circle cx="40" cy="60" r="30" fill="#4B3A8C" />
               <circle cx="60" cy="40" r="30" fill="#3F6E2B" />
               <circle cx="60" cy="40" r="30" fill="#131918" clip-path="url(#tlens)" />
             </svg>
-            Tally
-          </h1>
-          <p class="lede">
-            Type what you ate the way you would say it, or paste a recipe link.
-            Tally finds each food in
-            USDA nutrition data, guesses the portion, and asks when a guess could
-            change your day.
+            Tally · a calorie tracker for iPhone
           </p>
-          <p class="meta">iPhone · iOS 17+ · by Pretty Good Software</p>
+          <h1>As quick as the AI apps. As accurate as the search ones.</h1>
+          <p class="lede">
+            Write a meal the way you would say it, like “half a turkey sandwich
+            and a cup of tomato soup”. Tally looks up every food in real
+            nutrition databases and logs the calories. There is no food list to
+            scroll and nothing to weigh.
+          </p>
+          <p class="meta">iPhone · iOS 17+ · TestFlight beta</p>
         </div>
-        <div class="shot shot-hero">
-          <div class="shot-offset" aria-hidden="true"></div>
-          <img
-            src="/img/tally/meal-open.png"
-            width="800"
-            height={H}
-            alt="Nachos with cheese and guacamole opened: which nachos with cheese, the guacamole amount tagged Tally guessed, and Edit meal."
-          />
+        <div class="shot-pair">
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/typing.png" width="797" height={H} alt="Typing a slice of banana bread and a coffee with oat milk, with When did you eat it? chips above the box." />
+          </div>
+          <div class="shot shot-low">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/log.png" width="797" height={H} alt="The Log for today: each sentence as typed, then its meal with a title, the time eaten and calories." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="why">
+      <div class="inner">
+        <p class="eyebrow eyebrow-light">Why Tally</p>
+        <h2>Other calorie apps make you pick one.</h2>
+        <div class="why-grid">
+          <div class="why-col">
+            <p class="eyebrow eyebrow-light">Search-and-pick trackers</p>
+            <h3>Accurate, and a chore</h3>
+            <p>Every food on the plate is its own search, a pick from a long list, and a portion to enter. It works if you keep up with it.</p>
+          </div>
+          <div class="why-col">
+            <p class="eyebrow eyebrow-light">Snap-a-photo apps</p>
+            <h3>Quick, and a guess</h3>
+            <p>An AI looks at the meal and estimates everything, calories included. You can’t tell where a number came from.</p>
+          </div>
+          <div class="why-tally">
+            <p class="eyebrow eyebrow-tally">Tally</p>
+            <h3>Quick, and from real data</h3>
+            <p>You type the meal in a sentence and Tally does the looking up. Calories come from real nutrition databases. When Tally has to guess or estimate, it tells you, and asks if the guess matters.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="steps">
       <div class="inner">
-        <h2>Logging a meal</h2>
+        <h2>Easy to log. Accurate where it counts.</h2>
         <p class="swipe-hint">3 shots, swipe</p>
-        <ol class="step-grid swipe" aria-label="Logging a meal, 3 shots">
+        <ol class="step-grid swipe" aria-label="Easy to log, accurate where it counts, 3 shots">
           {
-            steps.map(([file, text, alt], i) => (
+            steps.map(([file, tag, title, text, alt]) => (
               <li class="step">
                 <div class="shot">
                   <div class="shot-offset" aria-hidden="true" />
-                  <img src={`/img/tally/${file}.png`} width="800" height={H} alt={alt} loading="lazy" />
+                  <img src={`/img/tally/${file}.png`} width="797" height={H} alt={alt} loading="lazy" />
                 </div>
-                <p class="step-num">0{i + 1}</p>
+                <p class="eyebrow eyebrow-tally step-tag">{tag}</p>
+                <h3 class="step-title">{title}</h3>
                 <p class="step-text">{text}</p>
               </li>
             ))
           }
         </ol>
-        <div class="share">
-          <div class="shot shot-share">
+      </div>
+    </section>
+
+    <section class="split">
+      <div class="inner split-inner">
+        <div class="split-copy">
+          <p class="eyebrow eyebrow-tally">Packaged food</p>
+          <h2>Scan it instead.</h2>
+          <p>Point the camera at the barcode. Tally finds the product and shows the serving and calories from its package label. One tap logs it.</p>
+          <p>No barcode handy? Type the numbers under the bars. Not in any database? Describe it in words like any other meal.</p>
+        </div>
+        <div class="shot-pair">
+          <div class="shot">
             <div class="shot-offset" aria-hidden="true"></div>
-            <img src="/img/tally/share.png" width="800" height={H} alt="Made a pasta bake with sausage and mozzarella, serves 4: the card says Your share: ¼ of a recipe for 4, with Change." loading="lazy" />
+            <img src="/img/tally/scan.png" width="797" height={H} alt="The scanner: green corners framing where the barcode goes, Point at a barcode and Tally reads it on its own, and Type barcode." loading="lazy" />
           </div>
-          <div class="share-copy">
-            <p>
-              Write “serves 4” and Tally logs your part. The card says Your
-              share: ¼ of a recipe for 4, with Change beside it.
-            </p>
-            <p class="steps-note">
-              Tally also asks which food you meant when the matching foods in the
-              USDA search would differ by 50 cal or more at the amount you logged.
-              Each answer shows what it comes to in calories.
-            </p>
+          <div class="shot shot-low">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/scan-found.png" width="797" height={H} alt="Found it: Pringles Crisps Original, about 15 crisps, 28 g, 150 cal, from the package label, with Log 1 serving." loading="lazy" />
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="recipes">
-      <div class="inner">
-        <h2>Meals you eat again</h2>
-        <p class="swipe-hint">8 shots, swipe</p>
-        <ol class="step-grid swipe" aria-label="Meals you eat again, 8 shots">
-          {
-            recipeSteps.map(([file, text, alt], i) => (
-              <li class="step">
-                <div class="shot">
-                  <div class="shot-offset" aria-hidden="true" />
-                  <img src={`/img/tally/${file}.png`} width="800" height={H} alt={alt} loading="lazy" />
-                </div>
-                <p class="step-num">0{i + 1}</p>
-                <p class="step-text">{text}</p>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-    </section>
-
-    <div class="inner"><hr class="rule" /></div>
-
-    <section class="review">
-      <div class="inner review-inner">
-        <div class="review-copy">
-          <h2>Review</h2>
-          <p>
-            Review lists the foods where Tally's guess could move your week.
-            Until you settle one, the estimate still counts.
-          </p>
-          <p>
-            Open a row to see why Tally chose its amount and the range it could
-            be, such as 1¾ cups at 469–861 cal. The slider and sizes use the
-            row's own unit. Confirm settles the row and it becomes yours, or use
-            “Tell Tally” to re-ask in your own words.
-          </p>
-        </div>
-        <div class="shot shot-review">
-          <div class="shot-offset" aria-hidden="true"></div>
-          <img src="/img/tally/review.png" width="800" height={H} alt="The Review tab: the first row open with Tally's reasoning, 469-861 cal, which-food answers, 1¾ cups and a slider." loading="lazy" />
         </div>
       </div>
     </section>
 
     <div class="inner"><hr class="rule" /></div>
 
-    <section class="week">
-      <div class="inner week-inner">
-        <div class="week-copy">
-          <h2>Today and the week</h2>
-          <p>
-            Balance opens on Today. The ring is the day's calories and each
-            slice is one meal, placed at the time you ate it. Under it, Tally
-            says how many calories are left today. A Today and Week switch sits
-            at the top.
-          </p>
-          <p>
-            Nutrients list protein, fat and carbs, with sodium in mg under them,
-            on both Today and Week.
-          </p>
-          <p>
-            Week is the other side of the switch: the rolling seven-day total,
-            how far over or under you are, the daily average, and a ring for each
-            day. Seven days is the cap; a surplus or deficit is not spread further
-            than that.
-          </p>
-          <p>
-            Each day opens on its own: the day's total as one number, then the
-            meals that still need a look above the ones that are settled.
-          </p>
+    <section class="split">
+      <div class="inner split-inner">
+        <div class="split-copy">
+          <h2>Your day and your week</h2>
+          <p>Today shows the day’s calories as a ring, one slice per meal, and what is left.</p>
+          <p>Week adds up the last seven days, so a big dinner and a light lunch the next day even out. Protein, fat, carbs and sodium sit under both.</p>
         </div>
-        <div>
-          <p class="swipe-hint">3 shots, swipe</p>
-          <div class="trio swipe" role="list" aria-label="Today and the week, 3 shots">
-            {
-              weekShots.map(([file, alt]) => (
-                <div class="shot" role="listitem">
-                  <div class="shot-offset" aria-hidden="true" />
-                  <img src={`/img/tally/${file}.png`} width="800" height={H} alt={alt} loading="lazy" />
-                </div>
-              ))
-            }
+        <div class="shot-pair">
+          <div class="shot">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/today.png" width="797" height={H} alt="Today: a ring of four meals at the times eaten, 1,274 of 2,000 cal, 726 left today." loading="lazy" />
+          </div>
+          <div class="shot shot-low">
+            <div class="shot-offset" aria-hidden="true"></div>
+            <img src="/img/tally/week.png" width="797" height={H} alt="Week, Oct 4 to 10: 10,449 cal, 3,551 under this week, averaging 1,493 a day, 7 of 7 days logged." loading="lazy" />
           </div>
         </div>
       </div>
     </section>
 
-    <section class="fix">
-      <div class="inner fix-inner">
-        <div>
-          <p class="swipe-hint">4 shots, swipe</p>
-          <div class="pair swipe" role="list" aria-label="Corrections and the range, 4 shots">
-            {
-              fixShots.map(([file, alt]) => (
-                <div class="shot" role="listitem">
-                  <div class="shot-offset" aria-hidden="true" />
-                  <img src={`/img/tally/${file}.png`} width="800" height={H} alt={alt} loading="lazy" />
-                </div>
-              ))
-            }
-          </div>
-        </div>
-        <div class="fix-copy">
-          <h2>Corrections and the range</h2>
-          <p>
-            Each amount says where it came from. One Tally guessed is tagged
-            Tally guessed, and Why? gives the range and the reason. Rows show
-            amounts such as 1 slice, 1 tbsp or 2¾ cups beside their calories.
-            Cards show one number; the range appears in Review and behind Why?.
-          </p>
-          <p>
-            The portion sheet shows the amount in the unit a menu would use
-            (ounces, cups, spoons or slices), the household measures USDA knows
-            for the food, a slider in that unit, and the amount drawn out.
-          </p>
-          <p>
-            Edit meal is on every open card. Enter the total you know, from a
-            label, a recipe or a menu, and the foods share it the way they're
-            logged. Or make the meal bigger or smaller, say you shared it, or
-            change its foods.
-          </p>
-          <p>
-            On a food's Values tab, a calorie number sets the food: 90 cal on the
-            guacamole replaces the estimate, and blank fields keep it.
-          </p>
-          <p>
-            If you forgot a food, open the logged meal, tap Add and search USDA.
-            Pick the food and an amount. What you add is yours, so it skips
-            review.
-          </p>
-          <p>
-            Tally keeps the text you typed as you typed it. Corrections sit in a
-            separate layer on top of it, and each one says who made it.
-          </p>
-          <h2 class="h2-account">Account</h2>
-          <p>
-            Tally needs an account: an email and a password. Your meals are
-            stored under that account.
-          </p>
-        </div>
+    <section class="also">
+      <div class="inner also-inner">
+        <h2>Also in Tally</h2>
+        <ul class="also-list">
+          <li>Paste a recipe link and Tally reads the recipe from the page.</li>
+          <li>Write “serves 4” and Tally logs your share.</li>
+          <li>A meal you have logged before comes back in one tap.</li>
+          <li>Fix a meal in words: “less rice than that”.</li>
+          <li>Forgot a food? Search for it and add it.</li>
+          <li>Tally needs an account: an email and a password. Your meals are stored under it.</li>
+        </ul>
       </div>
     </section>
 
@@ -475,36 +374,88 @@ const fixShots = [
       }
       .shot-hero { max-width: 300px; }
 
-      /* ---------- logging a meal ---------- */
+      /* The headline is a sentence now; the mark sits in the eyebrow. */
+      .hero h1 { display: block; font-size: clamp(2.4rem, 4.6vw, 4rem); line-height: 1.02; }
+      .eyebrow-mark { display: flex; align-items: center; gap: 0.6rem; }
+      .eyebrow-svg { width: 22px; height: 22px; flex: none; }
+      .hero-inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+      .hero-copy { max-width: 34rem; }
+
+      /* Two screenshots side by side, the second set lower. */
+      .shot-pair {
+        display: flex;
+        gap: clamp(1.2rem, 3vw, 2rem);
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .shot-pair .shot { flex: 0 1 230px; max-width: 230px; margin: 0 18px 18px 0; }
+      .shot-pair .shot-low { margin-top: 56px; }
+
+      /* ---------- why tally ---------- */
+      .why { background: var(--grape); color: var(--paper-lit); padding-block: clamp(3.5rem, 7vw, 6rem); }
+      .why h2 { margin-top: 1rem; max-width: 24ch; }
+      .why-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.75rem;
+        margin-top: 3rem;
+      }
+      .why-col { border-top: 1.5px solid var(--lilac); padding-top: 1.25rem; }
+      .why-col p:last-child { color: #e4def6; margin-top: 0.6rem; max-width: 40ch; }
+      .why-tally {
+        background: var(--paper-lit);
+        color: var(--ink);
+        border: 1.5px solid var(--ink);
+        box-shadow: 12px 12px 0 var(--tally);
+        padding: 1.4rem 1.5rem 1.6rem;
+      }
+      .why-tally p:last-child { color: var(--muted); margin-top: 0.6rem; }
+      .why h3, .step-title, .split h3 {
+        font-family: var(--display);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        font-size: 1.3rem;
+        margin-top: 0.75rem;
+      }
+
+      /* ---------- easy and accurate ---------- */
+      .step-tag { margin-top: 1.6rem; }
+      .step-title { margin-top: 0.35rem; }
+      .step-text { color: var(--muted); }
+
+      /* ---------- scanner, day and week ---------- */
+      .split { background: var(--paper); padding-block: clamp(3.5rem, 7vw, 6rem); }
+      .split-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: clamp(1.8rem, 5vw, 4.5rem);
+        align-items: center;
+      }
+      .split h2 { margin-top: 0.8rem; }
+      .split-copy p:not(.eyebrow) { color: var(--muted); margin-top: 1rem; max-width: 44ch; font-size: 1.1rem; }
+
+      /* ---------- also ---------- */
+      .also { background: var(--paper-warm); padding-block: clamp(3rem, 6vw, 5rem); }
+      .also-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+        gap: 2rem clamp(2rem, 5vw, 4.5rem);
+      }
+      .also h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+      .also-list { list-style: none; padding: 0; font-family: var(--mono); font-size: 0.85rem; line-height: 1.55; }
+      .also-list li { padding-block: 0.9rem; border-top: 1px solid var(--rule-firm); }
+      .also-list li:last-child { border-bottom: 1px solid var(--rule-firm); }
+
       .steps { background: var(--paper-warm); padding-block: clamp(3rem, 6vw, 5rem); }
       h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); line-height: 1.05; }
       .step-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: clamp(1.5rem, 3vw, 2.5rem);
-        margin-top: 2rem;
+        margin-top: 2.5rem;
       }
       .step .shot { max-width: 240px; }
-      .step-num {
-        color: var(--tally);
-        font-size: 0.8rem;
-        letter-spacing: 0.1em;
-        margin-top: 1.6rem;
-      }
-      .step-text { color: var(--ink); margin-top: 0.4rem; max-width: 30ch; }
-      .recipes { background: var(--paper); padding-block: clamp(3rem, 6vw, 5rem); }
-      .steps-note { margin-top: 2rem; max-width: 60ch; }
-      .recipes .step-grid { row-gap: clamp(2rem, 4vw, 3rem); }
-      .share {
-        margin-top: 3rem;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 2rem clamp(1.8rem, 5vw, 4rem);
-      }
-      .shot-share { flex: 0 1 234px; max-width: 234px; margin: 0 18px 18px 0; }
-      .share-copy { flex: 1 1 320px; }
-      .share-copy p:first-child { max-width: 46ch; }
+      .rule { border: 0; border-top: 1px solid var(--rule); }
       .swipe-hint {
         display: none;
         margin-top: 0.6rem;
@@ -515,49 +466,6 @@ const fixShots = [
         text-transform: uppercase;
         color: var(--muted-soft);
       }
-
-      /* ---------- review ---------- */
-      .review { background: var(--paper); padding-top: clamp(3.5rem, 7vw, 6rem); padding-bottom: clamp(2rem, 4vw, 3rem); }
-      .review-inner {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        gap: clamp(1.8rem, 5vw, 4rem);
-        align-items: center;
-      }
-      .shot-review { max-width: 300px; }
-      .rule { border: 0; border-top: 1px solid var(--rule); }
-
-      /* ---------- the week ---------- */
-      .week { background: var(--paper); padding-block: clamp(3.5rem, 7vw, 6rem); }
-      .week-inner {
-        display: grid;
-        grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
-        gap: clamp(1.8rem, 5vw, 4rem);
-        align-items: center;
-      }
-      .week-copy p, .fix-copy p, .review-copy p { color: var(--muted); margin-top: 1rem; max-width: 46ch; }
-      .trio {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: clamp(1.2rem, 2.5vw, 2rem);
-      }
-      .trio .shot { max-width: 220px; }
-
-      /* ---------- corrections and the range ---------- */
-      .fix { background: var(--paper-warm); padding-block: clamp(3.5rem, 7vw, 6rem); }
-      .fix-inner {
-        display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-        gap: clamp(1.8rem, 5vw, 4rem);
-        align-items: center;
-      }
-      .pair {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 2.2rem 1.8rem;
-      }
-      .pair .shot { max-width: 240px; }
-      .h2-account { margin-top: 2.4rem; }
 
       /* ---------- footer, same as the home page ---------- */
       .foot { background: var(--ink); color: var(--paper-warm); padding-block: clamp(3rem, 5vw, 4.5rem); }
@@ -582,14 +490,11 @@ const fixShots = [
 
       /* ---------- responsive ---------- */
       @media (max-width: 900px) {
-        .hero-inner, .review-inner, .week-inner, .fix-inner, .foot-grid { grid-template-columns: minmax(0, 1fr); }
-        .shot-hero { max-width: 280px; margin-top: 1rem; }
+        .hero-inner, .split-inner, .also-inner, .why-grid, .foot-grid { grid-template-columns: minmax(0, 1fr); }
         .step-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .step .shot, .trio .shot, .pair .shot { max-width: none; }
-        .week-inner .trio { order: 2; }
-        .fix-inner .pair { order: 2; }
+        .step .shot { max-width: none; }
       }
-      /* Phone: each row of shots swipes sideways instead of stacking. */
+      /* Phone: the steps swipe sideways instead of stacking. */
       @media (max-width: 520px) {
         .swipe-hint { display: block; }
         .swipe {
@@ -604,7 +509,8 @@ const fixShots = [
         .swipe > * { flex: 0 0 218px; scroll-snap-align: start; }
         .swipe .shot, .step .shot { max-width: 200px; margin: 0 18px 0 0; }
         .swipe .step-text { width: 200px; }
-        .shot-share { max-width: 200px; }
+        .shot-pair .shot { flex: 0 1 160px; }
+        .shot-pair .shot-low { margin-top: 36px; }
       }
 
       @media (prefers-reduced-motion: reduce) {
