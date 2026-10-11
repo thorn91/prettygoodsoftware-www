@@ -534,10 +534,11 @@ player.seek(to: t,
     scope = nextScope;
     order = scope === 'all' ? ['card', ...FULL_TOUR.flatMap((k) => PROJECTS[k as Exclude<Scope, 'all'>].stops), 'end'] : [...PROJECTS[scope].stops, 'end'];
     view = '';
-    requestAnimationFrame(() => {
+    // A timer, not an animation frame: a link opened in a background tab still starts.
+    setTimeout(() => {
       root.classList.add('rm-on');
       go(first);
-    });
+    }, 20);
   }
 
   const start = (key: Scope) => open(key, key === 'all' ? 'card' : PROJECTS[key].stops[0]);
@@ -597,7 +598,13 @@ player.seek(to: t,
   });
 
   const fromHash: Record<string, Scope> = { '#resume': 'all', '#tour-tally': 'tally', '#tour-coaching': 'coach' };
-  if (fromHash[location.hash]) start(fromHash[location.hash]);
+  // ?resume opens the card; ?tour=tally or ?tour=coaching starts one app's tour.
+  const params = new URLSearchParams(location.search);
+  const fromParam: Record<string, Scope> = { tally: 'tally', coaching: 'coach', coach: 'coach' };
+  const tourParam = params.get('tour');
+  if (tourParam !== null) start(fromParam[tourParam] ?? 'all');
+  else if (params.has('resume')) start('all');
+  else if (fromHash[location.hash]) start(fromHash[location.hash]);
   addEventListener('hashchange', () => {
     if (fromHash[location.hash]) start(fromHash[location.hash]);
   });
