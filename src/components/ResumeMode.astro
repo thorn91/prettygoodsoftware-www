@@ -1,0 +1,920 @@
+---
+// Resume mode: a business card over the studio page, then a guided tour that
+// moves the page itself like a camera to each app's card and screenshot.
+// Each stop's copy lives in a <template> below; the script only frames and
+// sequences. To add an app, see the "How to add an app to the tour" board on
+// the Resume Mode canvas: tag its card with data-tour="<key>", add its stop
+// templates here, and add it to PROJECTS in the script.
+const history = [
+  ['Now', 'I lead an engineering team on a large back-office and accounting application.'],
+  ['Also', 'Pretty Good Software: two iPhone apps, designed and built by me.'],
+  ['Before', 'Founding engineer at CollectivIQ, now a part-time technical advisor there.'],
+  ['School', 'Rhodes College (B.S. Neuroscience), University of Georgia (B.S. Computer Science)'],
+];
+
+const ladder = [
+  ['1', 'You', 'An amount you typed: “2 cups”'],
+  ['2', 'Your recipe', 'Its foods, the way you saved them'],
+  ['3', 'A meal you settled', 'Offered back the way you left it'],
+  ['4', 'Your usual', 'The amount you set when you fixed it last'],
+  ['5', 'Tally’s guess', 'Only when nothing above applies'],
+];
+
+const sayings = [
+  ['“Same as yesterday”', 'Yesterday’s meal, offered back'],
+  ['“The overnight oats I had on Friday”', 'Friday’s bowl, same amounts'],
+  ['“1 slice of that pizza”', 'The same slice as last time'],
+  ['“…but no onions”', 'That dish, less the onions'],
+  ['“Hey Siri, log a meal in Tally”', 'A meal it knows logs at once'],
+];
+
+const tallyFlow = [
+  ['iPhone app', 'SwiftUI; sends the meal exactly as typed'],
+  ['API', 'FastAPI in a Cloudflare container'],
+  ['Memory', 'Checked first; a meal it knows skips the model'],
+  ['Claude', 'Reads the words, never supplies a number'],
+  ['Sources', 'Trusted nutrition data for every number'],
+  ['Postgres', 'Your log, meals and usual portions'],
+];
+
+const coachFlow = [
+  ['Capture', 'Camera or Photos, copied into the app'],
+  ['ClipStore', 'One storage interface for every screen'],
+  ['PlayerEngine', 'Frame-exact seeks and single steps'],
+  ['PoseTracker', 'Vision skeleton, smoothed, on the phone'],
+  ['Report', 'Drawings and notes rendered to a PDF'],
+];
+
+const frames = Array.from({ length: 12 }, (_, i) => i);
+const isKey = (i: number) => i === 0 || i === 6;
+
+const provenance = [
+  ['The model', '2 × egg, large', 'Reads the words. No numbers.'],
+  ['Code', '2 × 50 g = 100 g', 'A fixed unit ratio, not a guess.'],
+  ['Source', '143 cal', 'From the food record, per 100 g.'],
+];
+
+const delay = (start: number, step: number, i: number) => `--d: ${start + i * step}ms`;
+---
+
+<div id="resume-mode" class="rm" role="dialog" aria-modal="true" aria-label="Resume mode" hidden>
+  <div class="rm-scrim" aria-hidden="true"></div>
+  <div class="rm-offset" aria-hidden="true"></div>
+  <div class="rm-spot" aria-hidden="true"></div>
+  <div class="rm-slug" aria-hidden="true"></div>
+
+  <div class="rm-card" hidden>
+    <div class="rm-card-head rise" style="--d: 140ms">
+      <div>
+        <h2 class="rm-name" tabindex="-1">Thomas Horn</h2>
+        <p class="rm-role">Software engineer in Raleigh, North Carolina</p>
+      </div>
+      <svg class="rm-card-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <clipPath id="rmlens"><circle cx="40" cy="60" r="30"></circle></clipPath>
+        <circle cx="40" cy="60" r="30" fill="#4B3A8C"></circle>
+        <circle cx="60" cy="40" r="30" fill="#E14424"></circle>
+        <circle cx="60" cy="40" r="30" fill="#420F13" clip-path="url(#rmlens)"></circle>
+      </svg>
+    </div>
+    <div class="rm-rule rise" style="--d: 220ms"></div>
+    <dl class="rm-history">
+      {history.map(([k, v], i) => (
+        <div class="rise" style={delay(300, 70, i)}>
+          <dt>{k}</dt>
+          <dd>{v}</dd>
+        </div>
+      ))}
+    </dl>
+    <div class="rm-card-actions rise" style="--d: 640ms">
+      <button type="button" class="rm-btn rm-btn-ink" data-rm-tour="all">Tour the two apps <span aria-hidden="true">→</span></button>
+      <a class="rm-btn rm-btn-ghost" href="https://thomashorn.info">thomashorn.info <span aria-hidden="true">↗</span></a>
+      <a class="rm-email" href="mailto:tom@prettygoodsoftware.llc">tom@prettygoodsoftware.llc</a>
+    </div>
+  </div>
+
+  <div class="rm-drawing" aria-hidden="true"></div>
+
+  <div class="rm-panel-wrap">
+    <section class="rm-panel" aria-live="polite">
+      <div class="rm-panel-ink" aria-hidden="true"></div>
+      <div class="rm-panel-box">
+        <div class="rm-panel-body"></div>
+        <div class="rm-step-nav">
+          <button type="button" class="rm-btn rm-btn-ghost rm-back" aria-label="Previous stop">←</button>
+          <span class="rm-step-count"></span>
+          <button type="button" class="rm-btn rm-next"></button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="rm-bar">
+    <div class="rm-bar-title">
+      <svg viewBox="0 0 100 100" width="24" height="24" aria-hidden="true">
+        <clipPath id="rmbarlens"><circle cx="40" cy="60" r="30"></circle></clipPath>
+        <circle cx="40" cy="60" r="30" fill="#4B3A8C"></circle>
+        <circle cx="60" cy="40" r="30" fill="#E14424"></circle>
+        <circle cx="60" cy="40" r="30" fill="#420F13" clip-path="url(#rmbarlens)"></circle>
+      </svg>
+      <span class="rm-bar-label">Resume mode</span>
+    </div>
+    <nav class="rm-segments" aria-label="Tour stops"></nav>
+    <button type="button" class="rm-btn rm-btn-ghost rm-exit">Exit <span class="rm-exit-long">resume mode</span> <span aria-hidden="true">×</span></button>
+  </div>
+
+  <!-- Tally: how it's built -->
+  <template data-stop="tb" data-project="tally" data-frame="card" data-seg="Tally" data-slug="Tally">
+    <p class="rm-eyebrow rise">Tally · How it's built</p>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">Typed words in, trusted numbers out</h2>
+    <p class="rm-lede rise" style="--d: 120ms">The app sends the meal as typed. The API asks a Claude model what was eaten, looks each food up in trusted nutrition sources, and keeps the log in Postgres.</p>
+    <ol class="rm-flow">
+      {tallyFlow.map(([k, v], i) => (
+        <li class="rise" style={delay(200, 50, i)}><span>{k}</span>{v}</li>
+      ))}
+    </ol>
+  </template>
+
+  <!-- Tally: what it remembers -->
+  <template data-stop="tm" data-project="tally" data-frame="shot" data-side="right" data-seg="Memory" data-slug="Tally · what it remembers">
+    <p class="rm-eyebrow rise">Tally · What it remembers</p>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">It remembers what you settle</h2>
+    <p class="rm-lede rise" style="--d: 120ms">Memory is checked before any model runs. A meal you have had before comes back the way you left it, and uses no lookup.</p>
+    <p class="rm-label rise" style="--d: 180ms">Things you can say</p>
+    <ul class="rm-sayings">
+      {sayings.map(([q, a], i) => (
+        <li class="rise" style={delay(240, 70, i)}><q>{q.replace(/[“”]/g, '')}</q><span>→ {a}</span></li>
+      ))}
+    </ul>
+  </template>
+  <template data-drawing="tm">
+    <p class="rm-label rise" style="--d: 500ms">Whose amount wins</p>
+    <ol class="rm-ladder">
+      {ladder.map(([n, k, v], i) => (
+        <li class="rise" style={delay(560, 80, i)}><b>{n}</b><span><strong>{k}</strong>{v}</span></li>
+      ))}
+    </ol>
+    <p class="rm-note rise" style="--d: 960ms">The top one wins. Every amount on a card says which one it came from.</p>
+  </template>
+
+  <!-- Tally: the hard part -->
+  <template data-stop="th" data-project="tally" data-frame="shot" data-side="left" data-seg="Hard part" data-slug="Tally · the log">
+    <p class="rm-eyebrow rise">Tally · The hard part</p>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">Keeping the model away from the math</h2>
+    <p class="rm-label rise" style="--d: 140ms">Problem</p>
+    <p class="rm-text rise" style="--d: 160ms">Ask a language model for calories and it answers with confidence, right or not.</p>
+    <p class="rm-label rise" style="--d: 260ms">Fix</p>
+    <p class="rm-text rise" style="--d: 280ms">The model only reads the words. Grams come from fixed unit ratios in code, and every number comes from a trusted source. A food with no listed energy is dropped, never logged at zero. When a guess could change the day, Tally asks.</p>
+    <ul class="rm-bullets">
+      <li class="rise" style="--d: 380ms">A model or prompt change ships only after a logged benchmark run</li>
+      <li class="rise" style="--d: 440ms">Spend caps per meal, per person per day, and overall</li>
+    </ul>
+  </template>
+  <template data-drawing="th">
+    <p class="rm-label rise" style="--d: 500ms">Example: where each number comes from</p>
+    <p class="rm-quote rise" style="--d: 540ms">“two eggs”</p>
+    <dl class="rm-provenance">
+      {provenance.map(([k, v, note], i) => (
+        <div class="rise" style={delay(600, 90, i)}>
+          <dt>{k}</dt>
+          <dd><strong>{v}</strong>{note}</dd>
+        </div>
+      ))}
+    </dl>
+  </template>
+
+  <!-- Video Coaching: how it's built -->
+  <template data-stop="cb" data-project="coach" data-frame="card" data-seg="Coaching" data-slug="Video Coaching">
+    <p class="rm-eyebrow rise">Video Coaching · How it's built</p>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">One phone, no server</h2>
+    <p class="rm-lede rise" style="--d: 120ms">Clips are copied into the app's own storage and never leave the phone. Every screen talks to one storage interface, so a server could slot in later without rewriting them.</p>
+    <ol class="rm-flow">
+      {coachFlow.map(([k, v], i) => (
+        <li class="rise" style={delay(200, 60, i)}><span>{k}</span>{v}</li>
+      ))}
+    </ol>
+    <p class="rm-meta rise" style="--d: 520ms">Swift · SwiftUI · AVFoundation · Vision</p>
+  </template>
+
+  <!-- Video Coaching: the hard part -->
+  <template data-stop="ch" data-project="coach" data-frame="shot" data-side="left" data-seg="Hard part" data-slug="Video Coaching · the player">
+    <p class="rm-eyebrow rise">Video Coaching · The hard part</p>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">Stepping exactly one frame</h2>
+    <p class="rm-label rise" style="--d: 140ms">Problem</p>
+    <p class="rm-text rise" style="--d: 160ms">By default, AVPlayer seeks to the nearest keyframe, which can land several frames off. Reviewing a squat one frame at a time is the whole job.</p>
+    <p class="rm-label rise" style="--d: 260ms">Fix</p>
+    <pre class="rm-code rise" style="--d: 280ms">item.step(byCount: 1)
+player.seek(to: t,
+  toleranceBefore: .zero,
+  toleranceAfter: .zero)</pre>
+    <p class="rm-text rise" style="--d: 340ms">Drawings are vectors pinned to a frame and drawn live over the video, so they stay editable and never get burned in.</p>
+    <p class="rm-meta rise" style="--d: 420ms">26 test files cover the player, cuts, pose smoothing and the PDF layout.</p>
+  </template>
+  <template data-drawing="ch">
+    <p class="rm-label rise" style="--d: 500ms">Asking for frame 9</p>
+    {[
+      ['Default seek', 6, 'Snaps back to the nearest keyframe, three frames early.'],
+      ['Zero tolerance', 9, 'Decodes forward from the keyframe and stops on frame 9.'],
+    ].map(([title, landed, note], r) => (
+      <div class="rm-strip rise" style={delay(560, 100, r)}>
+        <strong>{title}</strong>
+        <ol>
+          {frames.map((i) => (
+            <li class:list={[isKey(i) && 'key', i === 9 && 'ask', i === landed && !isKey(i) && 'hit']}>
+              <span>{isKey(i) ? 'K' : i}</span>
+              <i aria-hidden="true">{i === landed ? '↑' : ''}</i>
+            </li>
+          ))}
+        </ol>
+        <p>{note}</p>
+      </div>
+    ))}
+    <p class="rm-legend rise" style="--d: 760ms"><span class="k"></span>Keyframe <span class="a"></span>Frame asked for</p>
+  </template>
+
+  <template data-end>
+    <p class="rm-eyebrow rm-eyebrow-grape rise">Thomas Horn</p>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1" data-end-title>That's both apps</h2>
+    <p class="rm-lede rise" style="--d: 120ms">Questions about how any of it works are welcome.</p>
+    <a class="rm-btn rm-btn-ink rm-btn-block rise" style="--d: 200ms" href="mailto:tom@prettygoodsoftware.llc">tom@prettygoodsoftware.llc</a>
+    <div class="rm-end-actions rise" style="--d: 260ms">
+      <button type="button" class="rm-btn rm-btn-ghost" data-end-alt></button>
+      <button type="button" class="rm-btn rm-btn-ghost" data-end-exit>Back to the site</button>
+    </div>
+  </template>
+</div>
+
+<script>
+  type Scope = 'all' | 'tally' | 'coach';
+  type Box = { x: number; y: number; w: number; h: number };
+
+  const PROJECTS: Record<Exclude<Scope, 'all'>, { name: string; ink: string; deep: string; stops: string[] }> = {
+    tally: { name: 'Tally', ink: '#3f6e2b', deep: '#3f6e2b', stops: ['tb', 'tm', 'th'] },
+    coach: { name: 'Video Coaching', ink: '#0e8c86', deep: '#0a6e69', stops: ['cb', 'ch'] },
+  };
+  const FULL_TOUR: Scope[] = ['tally', 'coach'];
+  const BAR = 64;
+
+  const root = document.getElementById('resume-mode') as HTMLElement;
+  const page = document.getElementById('page') as HTMLElement;
+  const q = <T extends Element>(sel: string) => root.querySelector(sel) as T;
+  const card = q<HTMLElement>('.rm-card');
+  const spot = q<HTMLElement>('.rm-spot');
+  const offset = q<HTMLElement>('.rm-offset');
+  const slug = q<HTMLElement>('.rm-slug');
+  const drawing = q<HTMLElement>('.rm-drawing');
+  const panelInk = q<HTMLElement>('.rm-panel-ink');
+  const panelBody = q<HTMLElement>('.rm-panel-body');
+  const stepNav = q<HTMLElement>('.rm-step-nav');
+  const stepCount = q<HTMLElement>('.rm-step-count');
+  const back = q<HTMLButtonElement>('.rm-back');
+  const next = q<HTMLButtonElement>('.rm-next');
+  const segments = q<HTMLElement>('.rm-segments');
+  const barLabel = q<HTMLElement>('.rm-bar-label');
+  const exitLong = q<HTMLElement>('.rm-exit-long');
+  const toggle = document.getElementById('resume-toggle') as HTMLButtonElement | null;
+
+  const stopTemplates = new Map<string, HTMLTemplateElement>();
+  root.querySelectorAll<HTMLTemplateElement>('template[data-stop]').forEach((t) => stopTemplates.set(t.dataset.stop!, t));
+  const drawingFor = (id: string) => root.querySelector<HTMLTemplateElement>(`template[data-drawing="${id}"]`);
+  const endTemplate = q<HTMLTemplateElement>('template[data-end]');
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const duration = () => (reduced.matches ? 0 : 1050);
+
+  let scope: Scope = 'all';
+  let order: string[] = [];
+  let view = '';
+  let saved = 0;
+  let opener: HTMLElement | null = null;
+  let busy = false;
+
+  const projectOf = (id: string) => stopTemplates.get(id)?.dataset.project as Exclude<Scope, 'all'> | undefined;
+  const isStop = (id: string) => stopTemplates.has(id);
+  const wide = () => innerWidth >= 1000;
+
+  // Position of an element inside the page, ignoring the camera's transform.
+  function pageRect(el: HTMLElement): Box {
+    let x = 0;
+    let y = 0;
+    let n: HTMLElement | null = el;
+    while (n && n !== page) {
+      x += n.offsetLeft;
+      y += n.offsetTop;
+      n = n.offsetParent as HTMLElement | null;
+    }
+    return { x, y, w: el.offsetWidth, h: el.offsetHeight };
+  }
+
+  function stage(): Box {
+    if (wide()) {
+      const panel = Math.min(464, innerWidth * 0.36);
+      return { x: 40, y: BAR + 28, w: innerWidth - panel - 48 - 40 - 56, h: innerHeight - BAR - 56 };
+    }
+    const sheet = Math.round(innerHeight * 0.5);
+    return { x: 16, y: BAR + 14, w: innerWidth - 32, h: innerHeight - sheet - BAR - 28 };
+  }
+
+  function fit(r: Box, box: Box, max: number): Box & { s: number } {
+    const s = Math.min(box.w / r.w, box.h / r.h, max);
+    return { s, x: box.x + (box.w - r.w * s) / 2, y: box.y + (box.h - r.h * s) / 2, w: r.w * s, h: r.h * s };
+  }
+
+  function union(a: Box, b: Box): Box {
+    const x = Math.min(a.x, b.x);
+    const y = Math.min(a.y, b.y);
+    return { x, y, w: Math.max(a.x + a.w, b.x + b.w) - x, h: Math.max(a.y + a.h, b.y + b.h) - y };
+  }
+
+  const cardOf = (key: string) => page.querySelector<HTMLElement>(`[data-tour="${key}"]`)!;
+  const shotOf = (key: string) => cardOf(key).querySelector<HTMLElement>('[data-tour-shot] img')!;
+
+  function setCamera(s: number, tx: number, ty: number) {
+    page.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+  }
+
+  function place(el: HTMLElement, b: Box) {
+    el.style.left = `${b.x}px`;
+    el.style.top = `${b.y}px`;
+    el.style.width = `${b.w}px`;
+    el.style.height = `${b.h}px`;
+  }
+
+  function frame() {
+    const area = stage();
+    drawing.hidden = true;
+
+    if (view === 'card') {
+      const s = 0.985;
+      setCamera(s, (innerWidth * (1 - s)) / 2, innerHeight / 2 - s * (saved + innerHeight / 2));
+      const r = card.getBoundingClientRect();
+      place(spot, { x: r.left, y: r.top, w: r.width, h: r.height });
+      const shift = wide() ? 18 : 12;
+      place(offset, { x: r.left + shift, y: r.top + shift, w: r.width, h: r.height });
+      return;
+    }
+
+    let target: Box;
+    let shown: Box & { s: number };
+    const key = view === 'end' ? (scope === 'all' ? '' : scope) : projectOf(view)!;
+    const tpl = stopTemplates.get(view);
+
+    if (view === 'end' && !key) {
+      target = union(pageRect(cardOf('tally')), pageRect(cardOf('coach')));
+      shown = fit(target, area, 1);
+    } else if (!tpl || tpl.dataset.frame === 'card') {
+      target = pageRect(cardOf(key));
+      // A phone card is a tall stack; frame its top at full width instead of shrinking all of it.
+      if (!wide()) target = { ...target, h: Math.min(target.h, (area.h * target.w) / area.w) };
+      shown = fit(target, area, 1);
+    } else {
+      target = pageRect(shotOf(key));
+      const s = Math.min((area.h * 0.9) / target.h, 1.3);
+      const w = target.w * s;
+      const draw = wide() ? drawingFor(view) : null;
+      const dw = Math.min(420, area.w - w - 64);
+      let x = area.x + (area.w - w) / 2;
+      if (draw && dw >= 300) {
+        const group = w + 56 + dw;
+        const gx = area.x + (area.w - group) / 2;
+        const shotLeft = tpl.dataset.side !== 'right';
+        x = shotLeft ? gx : gx + dw + 56;
+        drawing.replaceChildren(draw.content.cloneNode(true));
+        drawing.style.left = `${shotLeft ? gx + w + 56 : gx}px`;
+        drawing.style.width = `${dw}px`;
+        drawing.style.top = `${area.y + area.h / 2}px`;
+        drawing.hidden = false;
+      }
+      shown = { s, x, y: area.y + (area.h - target.h * s) / 2, w, h: target.h * s };
+    }
+
+    setCamera(shown.s, shown.x - shown.s * target.x, shown.y - shown.s * target.y);
+    const pad = wide() ? 14 : 8;
+    place(spot, { x: shown.x - pad, y: shown.y - pad, w: shown.w + pad * 2, h: shown.h + pad * 2 });
+    const slugText = tpl?.dataset.slug ?? '';
+    slug.textContent = slugText;
+    slug.hidden = !slugText;
+    slug.style.left = `${shown.x - pad}px`;
+    slug.style.top = `${wide() ? shown.y - pad - 26 : shown.y - pad}px`;
+  }
+
+  function renderPanel() {
+    const key = projectOf(view) ?? (scope === 'all' ? undefined : scope);
+    const ink = key ? PROJECTS[key] : null;
+    root.style.setProperty('--rm-ink', ink ? ink.ink : '#4b3a8c');
+    root.style.setProperty('--rm-deep', ink ? ink.deep : '#241e1a');
+
+    if (isStop(view)) {
+      panelBody.replaceChildren(stopTemplates.get(view)!.content.cloneNode(true));
+      const stops = order.filter(isStop);
+      const at = stops.indexOf(view);
+      stepCount.textContent = `0${at + 1} / 0${stops.length}`;
+      const after = order[order.indexOf(view) + 1];
+      next.textContent = `${stopTemplates.get(after)?.dataset.seg ?? 'Wrap up'} →`;
+      stepNav.hidden = false;
+    } else if (view === 'end') {
+      panelBody.replaceChildren(endTemplate.content.cloneNode(true));
+      const project = scope === 'all' ? null : PROJECTS[scope];
+      panelBody.querySelector('[data-end-title]')!.textContent = project ? `That's ${project.name}` : "That's both apps";
+      const alt = panelBody.querySelector<HTMLButtonElement>('[data-end-alt]')!;
+      const other = FULL_TOUR.find((k) => k !== scope);
+      if (scope === 'all' || !other) {
+        alt.textContent = 'Back to the card';
+        alt.onclick = () => go('card');
+      } else {
+        alt.textContent = `Tour ${PROJECTS[other as Exclude<Scope, 'all'>].name}`;
+        alt.onclick = () => start(other);
+      }
+      panelBody.querySelector<HTMLButtonElement>('[data-end-exit]')!.onclick = close;
+      stepNav.hidden = true;
+    }
+    panelInk.style.background = 'var(--rm-ink)';
+  }
+
+  function renderSegments() {
+    segments.replaceChildren(
+      ...order.map((id) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'rm-seg';
+        const at = order.indexOf(view);
+        const i = order.indexOf(id);
+        if (i === at) b.setAttribute('aria-current', 'step');
+        b.dataset.state = i === at ? 'now' : i < at ? 'past' : 'next';
+        b.innerHTML = `<span></span><em>${id === 'card' ? 'Card' : id === 'end' ? 'Contact' : stopTemplates.get(id)!.dataset.seg}</em>`;
+        b.onclick = () => go(id);
+        return b;
+      }),
+    );
+    segments.style.setProperty('--n', String(order.length));
+  }
+
+  function show() {
+    root.dataset.view = view === 'card' ? 'card' : 'tour';
+    root.dataset.end = view === 'end' ? 'true' : 'false';
+    card.hidden = view !== 'card';
+    card.classList.remove('rm-card-out');
+    if (view !== 'card') renderPanel();
+    renderSegments();
+    barLabel.textContent = scope === 'all' ? 'Resume mode' : `Technical tour · ${PROJECTS[scope].name}`;
+    exitLong.textContent = scope === 'all' ? 'resume mode' : 'tour';
+    frame();
+    const focus = view === 'card' ? card.querySelector<HTMLElement>('.rm-name') : panelBody.querySelector<HTMLElement>('.rm-title');
+    focus?.focus({ preventScroll: true });
+  }
+
+  function go(id: string) {
+    if (busy || id === view) return;
+    if (view === 'card' && !reduced.matches) {
+      busy = true;
+      card.classList.add('rm-card-out');
+      setTimeout(() => {
+        busy = false;
+        view = id;
+        show();
+      }, 200);
+      return;
+    }
+    view = id;
+    show();
+  }
+
+  function open(nextScope: Scope, first: string) {
+    if (root.hidden) {
+      opener = document.activeElement as HTMLElement | null;
+      saved = scrollY;
+      page.classList.add('rm-page');
+      page.style.transition = 'none';
+      setCamera(1, 0, -saved);
+      document.documentElement.classList.add('rm-open');
+      page.inert = true;
+      root.hidden = false;
+      void page.offsetWidth;
+      page.style.transition = '';
+      toggle?.setAttribute('aria-pressed', 'true');
+    }
+    scope = nextScope;
+    order = scope === 'all' ? ['card', ...FULL_TOUR.flatMap((k) => PROJECTS[k as Exclude<Scope, 'all'>].stops), 'end'] : [...PROJECTS[scope].stops, 'end'];
+    view = '';
+    requestAnimationFrame(() => {
+      root.classList.add('rm-on');
+      go(first);
+    });
+  }
+
+  const start = (key: Scope) => open(key, key === 'all' ? 'card' : PROJECTS[key].stops[0]);
+
+  function close() {
+    if (root.hidden) return;
+    root.classList.remove('rm-on');
+    setCamera(1, 0, -saved);
+    toggle?.setAttribute('aria-pressed', 'false');
+    setTimeout(() => {
+      root.hidden = true;
+      root.dataset.view = '';
+      page.style.transition = 'none';
+      page.classList.remove('rm-page');
+      page.style.transform = '';
+      document.documentElement.classList.remove('rm-open');
+      page.inert = false;
+      scrollTo({ top: saved, behavior: 'instant' });
+      void page.offsetWidth;
+      page.style.transition = '';
+      view = '';
+      opener?.focus({ preventScroll: true });
+    }, duration());
+  }
+
+  back.onclick = () => {
+    const i = order.indexOf(view);
+    if (i > 0) go(order[i - 1]);
+    else close();
+  };
+  next.onclick = () => go(order[order.indexOf(view) + 1]);
+  q<HTMLButtonElement>('.rm-exit').onclick = close;
+  root.querySelector<HTMLButtonElement>('[data-rm-tour="all"]')!.onclick = () => go(order[1]);
+
+  toggle?.addEventListener('click', () => (root.hidden ? start('all') : close()));
+  document.querySelectorAll<HTMLButtonElement>('[data-tour-start]').forEach((b) =>
+    b.addEventListener('click', () => start(b.dataset.tourStart as Scope)),
+  );
+
+  addEventListener('keydown', (e) => {
+    if (root.hidden) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight' && isStop(view)) next.click();
+    else if (e.key === 'ArrowLeft' && isStop(view)) back.click();
+  });
+
+  let resizing = 0;
+  addEventListener('resize', () => {
+    if (root.hidden) return;
+    cancelAnimationFrame(resizing);
+    resizing = requestAnimationFrame(() => {
+      page.style.transition = 'none';
+      frame();
+      void page.offsetWidth;
+      page.style.transition = '';
+    });
+  });
+
+  const fromHash: Record<string, Scope> = { '#resume': 'all', '#tour-tally': 'tally', '#tour-coaching': 'coach' };
+  if (fromHash[location.hash]) start(fromHash[location.hash]);
+  addEventListener('hashchange', () => {
+    if (fromHash[location.hash]) start(fromHash[location.hash]);
+  });
+</script>
+
+<style is:global>
+  #page { position: relative; }
+  #page.rm-page {
+    position: fixed;
+    inset: 0 0 auto 0;
+    transform-origin: 0 0;
+    transition: transform 1050ms cubic-bezier(0.65, 0, 0.35, 1);
+    will-change: transform;
+  }
+  html.rm-open { overflow: hidden; }
+  html.rm-open body { overflow: hidden; }
+
+  .rm { position: fixed; inset: 0; z-index: 50; pointer-events: none; --rm-ink: #4b3a8c; --rm-deep: #241e1a; }
+  .rm[hidden] { display: none; }
+  .rm button, .rm a, .rm-panel, .rm-card, .rm-bar { pointer-events: auto; }
+
+  .rm-scrim {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(236, 235, 229, 0.88);
+    background-image: radial-gradient(rgba(181, 175, 163, 0.7) 1.1px, transparent 1.3px);
+    background-size: 18px 18px;
+    opacity: 0;
+    transition: opacity 420ms ease;
+  }
+  .rm.rm-on[data-view='card'] .rm-scrim { opacity: 1; }
+
+  .rm-spot {
+    position: fixed;
+    box-sizing: border-box;
+    border: 1.5px solid var(--ink);
+    box-shadow: 0 0 0 3000px rgba(236, 235, 229, 0);
+    background: rgba(246, 245, 241, 0);
+    opacity: 0;
+    transition:
+      left 1050ms cubic-bezier(0.65, 0, 0.35, 1),
+      top 1050ms cubic-bezier(0.65, 0, 0.35, 1),
+      width 1050ms cubic-bezier(0.65, 0, 0.35, 1),
+      height 1050ms cubic-bezier(0.65, 0, 0.35, 1),
+      box-shadow 600ms ease,
+      background-color 360ms ease,
+      opacity 360ms ease;
+  }
+  .rm.rm-on .rm-spot { opacity: 1; }
+  .rm.rm-on[data-view='card'] .rm-spot { background: var(--paper-lit); }
+  .rm.rm-on[data-view='tour'] .rm-spot { box-shadow: 0 0 0 3000px rgba(236, 235, 229, 0.94); }
+
+  .rm-offset {
+    position: fixed;
+    background: var(--grape);
+    opacity: 0;
+    transform: translate(-18px, -18px);
+    transition: transform 460ms cubic-bezier(0.2, 0.7, 0.1, 1) 220ms, opacity 200ms ease 160ms;
+  }
+  .rm.rm-on[data-view='card'] .rm-offset { opacity: 1; transform: none; }
+
+  .rm-slug {
+    position: fixed;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    background: var(--rm-deep);
+    color: var(--paper-lit);
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transition:
+      left 1050ms cubic-bezier(0.65, 0, 0.35, 1),
+      top 1050ms cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 260ms ease,
+      background-color 600ms ease;
+  }
+  .rm.rm-on[data-view='tour'] .rm-slug:not([hidden]) { opacity: 1; }
+  .rm-slug[hidden] { display: flex; opacity: 0 !important; }
+
+  @keyframes rm-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .rm .rise { animation: rm-rise 560ms cubic-bezier(0.2, 0.7, 0.1, 1) both; animation-delay: var(--d, 0ms); }
+
+  /* ---------- business card ---------- */
+  .rm-card {
+    position: fixed;
+    left: 50%;
+    top: calc(32px + 50vh);
+    transform: translate(-50%, -50%);
+    width: min(640px, calc(100vw - 32px));
+    max-height: calc(100vh - 88px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 40px 44px;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+  .rm-card[hidden] { display: none; }
+  .rm-card.rm-card-out { opacity: 0; transform: translate(-50%, calc(-50% - 6px)); }
+  .rm-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .rm-name { font-size: 44px; line-height: 1; margin: 0; outline: none; }
+  .rm-role { font-family: var(--display); font-size: 19px; line-height: 1.3; color: var(--grape); margin-top: 10px; }
+  .rm-card-mark { width: 44px; height: 44px; flex: none; }
+  .rm-rule { height: 1px; background: var(--rule); margin: 24px 0 20px; }
+  .rm-history { display: flex; flex-direction: column; gap: 11px; }
+  .rm-history div { display: grid; grid-template-columns: 92px minmax(0, 1fr); column-gap: 16px; align-items: baseline; }
+  .rm-history dt, .rm-label, .rm-eyebrow {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+  }
+  .rm-history dd { font-size: 16px; line-height: 1.45; color: var(--ink); }
+  .rm-card-actions { margin-top: 28px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .rm-email { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  /* ---------- buttons ---------- */
+  .rm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 46px;
+    padding: 0 20px;
+    border: 0;
+    background: var(--rm-deep);
+    color: var(--paper-lit);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out;
+  }
+  .rm-btn:active { transform: translateY(1px); }
+  @media (hover: hover) { .rm-btn:hover { background: var(--grape); } }
+  .rm-btn-ink { background: var(--ink); }
+  .rm-btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--rule-firm); font-weight: 600; }
+  @media (hover: hover) { .rm-btn-ghost:hover { background: var(--paper-lit); border-color: var(--ink); } }
+  .rm-btn-block { width: 100%; }
+  .rm :focus-visible { outline: 2px solid var(--grape); outline-offset: 3px; }
+  .rm-title:focus, .rm-name:focus { outline: none; }
+
+  /* ---------- panel ---------- */
+  .rm-panel-wrap {
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    right: 48px;
+    width: min(464px, 36vw);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+  }
+  .rm-panel {
+    position: relative;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(56px);
+    transition: transform 640ms cubic-bezier(0.2, 0.7, 0.1, 1) 470ms, opacity 420ms ease 470ms;
+    pointer-events: none;
+  }
+  .rm.rm-on[data-view='tour'] .rm-panel { opacity: 1; transform: none; pointer-events: auto; }
+  .rm-panel-ink { position: absolute; inset: 0; transform: translate(14px, 14px); transition: background-color 600ms ease; }
+  .rm-panel-box {
+    position: relative;
+    box-sizing: border-box;
+    height: min(768px, calc(100vh - 112px));
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-lit);
+    border: 1.5px solid var(--ink);
+  }
+  @media (min-width: 1000px) { .rm[data-end='true'] .rm-panel-box { height: auto; } }
+  .rm-panel-body { flex: 1 1 auto; overflow-y: auto; padding: 30px 32px 16px; display: flex; flex-direction: column; gap: 16px; }
+  .rm-eyebrow { color: var(--rm-deep); }
+  .rm-eyebrow-grape { color: var(--grape); }
+  .rm-title { font-size: 30px; line-height: 1.1; margin: 0; outline: none; display: block; }
+  .rm-lede { font-size: 16px; line-height: 1.5; color: var(--muted); }
+  .rm-text { font-size: 16px; line-height: 1.5; color: var(--ink); }
+  .rm-meta { font-family: var(--mono); font-size: 12px; line-height: 1.5; color: var(--muted); }
+  .rm-label { margin-top: 4px; }
+  .rm-step-nav { display: flex; align-items: center; gap: 10px; padding: 14px 32px 24px; border-top: 1px solid var(--rule); }
+  .rm-step-nav[hidden] { display: none; }
+  .rm-back { min-width: 46px; padding: 0; font-size: 18px; }
+  .rm-step-count { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--muted); }
+  .rm-next { margin-left: auto; }
+
+  .rm-flow { list-style: none; padding: 0; display: flex; flex-direction: column; }
+  .rm-flow li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+    padding: 10px 14px;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .rm-flow li + li { margin-top: 12px; }
+  .rm-flow li + li::before { content: ''; position: absolute; left: 22px; top: -13.5px; width: 1.5px; height: 12px; background: var(--ink); }
+  .rm-flow li span { font-family: var(--mono); font-weight: 500; font-size: 12px; color: var(--rm-deep); }
+
+  .rm-sayings { list-style: none; padding: 0; }
+  .rm-sayings li { display: flex; flex-direction: column; gap: 3px; padding: 10px 0; border-top: 1px solid var(--rule); }
+  .rm-sayings q { font-size: 17px; font-style: italic; line-height: 1.3; }
+  .rm-sayings span { font-family: var(--mono); font-size: 12px; line-height: 1.4; color: var(--muted); }
+
+  .rm-bullets { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .rm-bullets li { display: flex; gap: 10px; align-items: baseline; font-family: var(--mono); font-weight: 500; font-size: 13px; line-height: 1.4; }
+  .rm-bullets li::before { content: ''; flex: none; width: 8px; height: 8px; background: var(--rm-ink); }
+
+  .rm-code {
+    margin: 0;
+    padding: 12px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .rm-end-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+
+  /* ---------- drawings beside a screenshot ---------- */
+  .rm-drawing {
+    position: fixed;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+    padding: 18px;
+    margin-left: -18px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rm-drawing[hidden] { display: none; }
+  .rm-drawing .rm-label { color: var(--rm-deep); margin: 0 0 6px; }
+  .rm-note { font-size: 15px; line-height: 1.45; color: var(--muted); margin-top: 6px; }
+
+  .rm-ladder { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .rm-ladder li {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1.5px solid var(--ink);
+    background: var(--paper-lit);
+  }
+  .rm-ladder b { font-family: var(--display); font-size: 22px; line-height: 1; }
+  .rm-ladder span { display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.35; color: var(--muted); }
+  .rm-ladder strong { font-family: var(--display); font-size: 17px; color: var(--ink); }
+  .rm-ladder li:first-child { background: var(--rm-ink); color: var(--paper-lit); }
+  .rm-ladder li:first-child strong, .rm-ladder li:first-child span { color: var(--paper-lit); }
+  .rm-ladder li:last-child { background: transparent; border-style: dashed; border-color: var(--rule-firm); }
+
+  .rm-quote { padding: 14px 16px; background: var(--paper-lit); border: 1.5px solid var(--ink); font-size: 19px; line-height: 1.3; margin-bottom: 6px; }
+  .rm-provenance div { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--rule-firm); }
+  .rm-provenance dt { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rm-deep); }
+  .rm-provenance dd { display: flex; flex-direction: column; gap: 3px; font-size: 14px; color: var(--muted); }
+  .rm-provenance strong { font-family: var(--display); font-size: 22px; color: var(--ink); letter-spacing: -0.01em; }
+
+  .rm-strip { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .rm-strip strong { font-family: var(--display); font-size: 17px; }
+  .rm-strip ol { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; }
+  .rm-strip li { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .rm-strip li span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    border: 1px solid var(--rule-firm);
+    background: var(--paper-lit);
+    color: var(--muted-soft);
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+  .rm-strip li i { height: 14px; font-style: normal; font-family: var(--mono); font-size: 12px; line-height: 1; }
+  .rm-strip li.key span { background: var(--ink); color: var(--paper-lit); }
+  .rm-strip li.ask span { border: 2px solid var(--teal); }
+  .rm-strip li.hit span { background: var(--teal); color: var(--paper-lit); }
+  .rm-strip li.hit i { color: #0a6e69; }
+  .rm-strip p { font-size: 15px; line-height: 1.4; color: var(--muted); }
+  .rm-legend { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .rm-legend span { width: 12px; height: 12px; box-sizing: border-box; }
+  .rm-legend .k { background: var(--ink); }
+  .rm-legend .a { border: 2px solid var(--teal); margin-left: 10px; }
+
+  /* ---------- top bar ---------- */
+  .rm-bar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 64px;
+    box-sizing: border-box;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: minmax(0, 280px) minmax(0, 1fr) minmax(0, 280px);
+    align-items: center;
+    gap: 32px;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--ink);
+    transform: translateY(-100%);
+    transition: transform 560ms cubic-bezier(0.2, 0.7, 0.1, 1);
+  }
+  .rm.rm-on .rm-bar { transform: none; }
+  .rm-bar-title { display: flex; align-items: center; gap: 12px; font-family: var(--display); font-weight: 700; font-size: 16px; white-space: nowrap; }
+  .rm-segments { display: grid; grid-template-columns: repeat(var(--n, 7), minmax(0, 1fr)); gap: 6px; }
+  .rm-seg { display: flex; flex-direction: column; justify-content: center; gap: 7px; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; }
+  .rm-seg span { display: block; height: 4px; background: var(--rule); transition: background-color 300ms ease; }
+  .rm-seg em { font-style: normal; font-family: var(--mono); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rm-seg[data-state='past'] span { background: var(--grape); }
+  .rm-seg[data-state='now'] span { background: var(--ink); }
+  .rm-seg[data-state='now'] em, .rm-seg:hover em { color: var(--ink); }
+  .rm-exit { justify-self: end; min-height: 44px; padding: 0 16px; font-size: 14px; }
+
+  /* ---------- phone ---------- */
+  @media (max-width: 999px) {
+    .rm-bar { padding: 0 8px 0 16px; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr auto; gap: 0 8px; }
+    .rm-bar-title { font-size: 15px; }
+    .rm-bar-title svg { display: none; }
+    .rm-segments { grid-column: 1 / -1; grid-row: 2; padding: 0 8px 8px 0; gap: 4px; }
+    .rm-seg { min-height: 0; }
+    .rm-seg span { height: 3px; }
+    .rm-seg em { display: none; }
+    .rm-exit { border: 0; padding: 0 12px; }
+    .rm-exit-long { display: none; }
+
+    .rm-card { top: calc(32px + 50vh); padding: 28px 24px 24px; }
+    .rm-name { font-size: 36px; }
+    .rm-role { font-size: 17px; }
+    .rm-card-mark { width: 36px; height: 36px; }
+    .rm-history div { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+    .rm-card-actions .rm-btn { flex: 1 1 100%; }
+    .rm-email { margin: 0 auto; }
+
+    .rm-panel-wrap { inset: auto 0 0 0; width: auto; height: 50vh; align-items: stretch; }
+    .rm-panel { transform: translateY(110%); opacity: 1; transition: transform 620ms cubic-bezier(0.2, 0.7, 0.1, 1) 360ms; }
+    .rm.rm-on[data-view='tour'] .rm-panel { transform: none; }
+    .rm-panel-ink { inset: -6px 0 auto 0; height: 6px; transform: none; }
+    .rm-panel-box { height: 100%; border-width: 1.5px 0 0; }
+    .rm-panel-body { padding: 22px 20px 12px; gap: 12px; }
+    .rm-title { font-size: 26px; }
+    .rm-step-nav { padding: 12px 20px 20px; }
+    .rm-slug { height: 22px; font-size: 9px; padding: 0 8px; }
+  }
+</style>
