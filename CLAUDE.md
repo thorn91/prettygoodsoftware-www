@@ -1,8 +1,5 @@
-# Pretty Good Software studio site
+# prettygoodsoftware-www: hosting only
 
-The studio site. Astro; a push to main deploys it.
+Nothing here to edit. This repo serves prettygoodsoftware.llc from its `gh-pages` branch, which releases from `thorn91/sites` write. The site's code lives in `thorn91/sites` (`~/Source/sites`, `apps/studio`); work there, and read its `CLAUDE.md`.
 
-@~/Documents/Tom/PGS/Studio.md
-
-This site uses the studio inks (grape and vermilion). Each product gets a card here; a card lists that product's
-headline capabilities and changes when they do.
+Never delete this repo or its `gh-pages` branch, and never change its Pages settings: the site would go offline.
