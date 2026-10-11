@@ -48,10 +48,18 @@ const coachFlow = [
 const frames = Array.from({ length: 12 }, (_, i) => i);
 const isKey = (i: number) => i === 0 || i === 6;
 
-const provenance = [
-  ['The model', '2 × egg, large', 'Reads the words. No numbers.'],
-  ['Code', '2 × 50 g = 100 g', 'A fixed unit ratio, not a guess.'],
-  ['Source', '143 cal', 'From the food record, per 100 g.'],
+
+const guessLoop = [
+  ['Tally guesses', 'Shown as a range and tagged as a guess'],
+  ['It asks, if it matters', 'Only when the guess could change your day'],
+  ['You settle it', 'Your amount wins and is marked as yours'],
+  ['Tally remembers', 'It becomes your usual for that food'],
+  ['Next time, exact', 'Same words, same number'],
+];
+
+const searchTest = [
+  ['Live source', '141'],
+  ['Tally’s copy', '144'],
 ];
 
 const delay = (start: number, step: number, i: number) => `--d: ${start + i * step}ms`;
@@ -159,27 +167,58 @@ const delay = (start: number, step: number, i: number) => `--d: ${start + i * st
   <!-- Tally: the hard part -->
   <template data-stop="th" data-project="tally" data-frame="shot" data-side="left" data-seg="Hard part" data-slug="Tally · the log">
     <p class="rm-eyebrow rise">Tally · The hard part</p>
-    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">Keeping the model away from the math</h2>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">Numbers you can trust, the same way twice</h2>
     <p class="rm-label rise" style="--d: 140ms">Problem</p>
-    <p class="rm-text rise" style="--d: 160ms">Ask a language model for calories and it answers with confidence, right or not.</p>
-    <p class="rm-label rise" style="--d: 260ms">Fix</p>
-    <p class="rm-text rise" style="--d: 280ms">The model only reads the words. Grams come from fixed unit ratios in code, and every number comes from a trusted source. A food with no listed energy is dropped, never logged at zero. When a guess could change the day, Tally asks.</p>
+    <p class="rm-text rise" style="--d: 160ms">A food log only helps if its numbers are believable and repeatable. The same meal should land on the same number, and a guess should say it is a guess.</p>
+    <p class="rm-label rise" style="--d: 240ms">Confidence</p>
     <ul class="rm-bullets">
-      <li class="rise" style="--d: 380ms">A model or prompt change ships only after a logged benchmark run</li>
-      <li class="rise" style="--d: 440ms">Spend caps per meal, per person per day, and overall</li>
+      <li class="rise" style="--d: 260ms">Every amount says where it came from: you, your recipe, a meal you settled, your usual, or Tally's guess</li>
+      <li class="rise" style="--d: 300ms">A guess shows as a range, and Tally asks only when it could change your day</li>
+    </ul>
+    <p class="rm-label rise" style="--d: 360ms">Consistency</p>
+    <ul class="rm-bullets">
+      <li class="rise" style="--d: 380ms">Meals you settled and portions you fixed come back exact</li>
+      <li class="rise" style="--d: 420ms">The model reads the words and the math runs in code, so the same words give the same number</li>
+      <li class="rise" style="--d: 460ms">Resizing a meal moves only Tally's estimates; your numbers stay yours</li>
     </ul>
   </template>
   <template data-drawing="th">
-    <p class="rm-label rise" style="--d: 500ms">Example: where each number comes from</p>
-    <p class="rm-quote rise" style="--d: 540ms">“two eggs”</p>
-    <dl class="rm-provenance">
-      {provenance.map(([k, v, note], i) => (
-        <div class="rise" style={delay(600, 90, i)}>
-          <dt>{k}</dt>
-          <dd><strong>{v}</strong>{note}</dd>
+    <p class="rm-label rise" style="--d: 500ms">How a guess becomes yours</p>
+    <ol class="rm-loop">
+      {guessLoop.map(([k, v], i) => (
+        <li class="rise" style={delay(560, 80, i)}><b>{i + 1}</b><span><strong>{k}</strong>{v}</span></li>
+      ))}
+    </ol>
+  </template>
+
+  <!-- Tally: in progress -->
+  <template data-stop="tn" data-project="tally" data-frame="shot" data-side="right" data-seg="Now building" data-slug="Tally · in progress">
+    <p class="rm-eyebrow rise">Tally · In progress</p>
+    <h2 class="rm-title rise" style="--d: 60ms" tabindex="-1">Find what people mean, in kitchen units</h2>
+    <p class="rm-label rise" style="--d: 140ms">What testers hit</p>
+    <p class="rm-text rise" style="--d: 160ms">Balsamic was offered in grams. “Olive oil dressing” found nothing.</p>
+    <p class="rm-label rise" style="--d: 240ms">What's changing</p>
+    <ul class="rm-bullets">
+      <li class="rise" style="--d: 260ms">Your own foods first, at your last amount</li>
+      <li class="rise" style="--d: 300ms">Amounts in tbsp, cups or slices from the food's real measures, never a guessed spoon</li>
+      <li class="rise" style="--d: 340ms">Tally searches its own copy of the reference foods by words and by meaning at once, asks the outside source only on a miss, and keeps the answer</li>
+      <li class="rise" style="--d: 380ms">A miss offers “describe it instead”</li>
+    </ul>
+  </template>
+  <template data-drawing="tn">
+    <p class="rm-label rise" style="--d: 500ms">Blind test on 161 real searches</p>
+    <p class="rm-note rise" style="--d: 540ms">Right food in the 10 results the model reads</p>
+    <div class="rm-bars">
+      {searchTest.map(([k, n], i) => (
+        <div class="rise" style={delay(600, 100, i)}>
+          <span>{k}</span>
+          <i style={`--w: ${(Number(n) / 161) * 100}%`}></i>
+          <b>{n}</b>
         </div>
       ))}
-    </dl>
+    </div>
+    <p class="rm-stat rise" style="--d: 820ms"><strong>23% fewer</strong> model rounds per meal, because the copy carries each food's measures</p>
+    <p class="rm-note rise" style="--d: 900ms">Scored blind, on searches held out from tuning.</p>
   </template>
 
   <!-- Video Coaching: how it's built -->
@@ -248,7 +287,7 @@ player.seek(to: t,
   type Box = { x: number; y: number; w: number; h: number };
 
   const PROJECTS: Record<Exclude<Scope, 'all'>, { name: string; ink: string; deep: string; stops: string[] }> = {
-    tally: { name: 'Tally', ink: '#3f6e2b', deep: '#3f6e2b', stops: ['tb', 'tm', 'th'] },
+    tally: { name: 'Tally', ink: '#3f6e2b', deep: '#3f6e2b', stops: ['tb', 'tm', 'th', 'tn'] },
     coach: { name: 'Video Coaching', ink: '#0e8c86', deep: '#0a6e69', stops: ['cb', 'ch'] },
   };
   const FULL_TOUR: Scope[] = ['tally', 'coach'];
@@ -826,11 +865,32 @@ player.seek(to: t,
   .rm-ladder li:first-child strong, .rm-ladder li:first-child span { color: var(--paper-lit); }
   .rm-ladder li:last-child { background: transparent; border-style: dashed; border-color: var(--rule-firm); }
 
-  .rm-quote { padding: 14px 16px; background: var(--paper-lit); border: 1.5px solid var(--ink); font-size: 19px; line-height: 1.3; margin-bottom: 6px; }
-  .rm-provenance div { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--rule-firm); }
-  .rm-provenance dt { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rm-deep); }
-  .rm-provenance dd { display: flex; flex-direction: column; gap: 3px; font-size: 14px; color: var(--muted); }
-  .rm-provenance strong { font-family: var(--display); font-size: 22px; color: var(--ink); letter-spacing: -0.01em; }
+  .rm-loop { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .rm-loop li {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1.5px solid var(--ink);
+    background: var(--paper-lit);
+  }
+  .rm-loop b { font-family: var(--display); font-size: 22px; line-height: 1; }
+  .rm-loop span { display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.35; color: var(--muted); }
+  .rm-loop strong { font-family: var(--display); font-size: 17px; color: var(--ink); }
+  .rm-loop li:first-child { background: transparent; border-style: dashed; border-color: var(--rule-firm); }
+  .rm-loop li:last-child { background: var(--rm-ink); }
+  .rm-loop li:last-child b, .rm-loop li:last-child strong, .rm-loop li:last-child span { color: var(--paper-lit); }
+
+  .rm-bars { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+  .rm-bars div { display: grid; grid-template-columns: 104px minmax(0, 1fr) 40px; gap: 12px; align-items: center; }
+  .rm-bars span { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .rm-bars i { display: block; height: 28px; width: var(--w); background: var(--rule-firm); }
+  .rm-bars div:last-child i { background: var(--rm-ink); }
+  .rm-bars div:last-child span { color: var(--rm-deep); }
+  .rm-bars b { font-family: var(--display); font-size: 22px; text-align: right; }
+  .rm-stat { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule-firm); font-size: 15px; line-height: 1.45; color: var(--muted); }
+  .rm-stat strong { display: block; font-family: var(--display); font-size: 26px; color: var(--ink); letter-spacing: -0.01em; }
 
   .rm-strip { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
   .rm-strip strong { font-family: var(--display); font-size: 17px; }
