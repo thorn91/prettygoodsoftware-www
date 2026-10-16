@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="-6 -9 112 108" role="img" aria-label="Tally the abacus counting beads while it works">
+<g>
+<rect x="29" y="73" width="13" height="7" rx="3.5" fill="#241E1A"></rect>
+<rect x="58" y="73" width="13" height="7" rx="3.5" fill="#241E1A"></rect>
+<path d="M15 50 Q8 54 9.5 61" fill="none" stroke="#241E1A" stroke-width="3.5" stroke-linecap="round"></path>
+<circle cx="9.5" cy="62.5" r="3.2" fill="#241E1A"></circle>
+<g>
+<path d="M85 50 Q92 54 90.5 61" fill="none" stroke="#241E1A" stroke-width="3.5" stroke-linecap="round"></path>
+<circle cx="90.5" cy="62.5" r="3.2" fill="#241E1A"></circle>
+</g>
+<rect x="15" y="32" width="11" height="38" rx="3.3" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<rect x="74" y="32" width="11" height="38" rx="3.3" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<rect x="26" y="36" width="48" height="32" fill="#F6F5F1"></rect>
+<line x1="26" y1="45" x2="74" y2="45" stroke="#6E6960" stroke-width="2.5"></line>
+<line x1="26" y1="58" x2="74" y2="58" stroke="#6E6960" stroke-width="2.5"></line>
+<circle cx="32.5" cy="45" r="5.3" fill="#3F6E2B" stroke="#241E1A" stroke-width="2"></circle>
+<circle cx="45" cy="45" r="5.3" fill="#3F6E2B" stroke="#241E1A" stroke-width="2"></circle>
+<g>
+<g opacity="0">
+<line x1="75" y1="41.5" x2="79.5" y2="41.5" stroke="#6E6960" stroke-width="1.8" stroke-linecap="round"></line>
+<line x1="75" y1="48.5" x2="80.5" y2="48.5" stroke="#6E6960" stroke-width="1.8" stroke-linecap="round"></line>
+</g>
+<circle cx="67.5" cy="45" r="5.3" fill="#3F6E2B" stroke="#241E1A" stroke-width="2"></circle>
+</g>
+<circle cx="32.5" cy="58" r="5.3" fill="#4B3A8C" stroke="#241E1A" stroke-width="2"></circle>
+<g>
+<g opacity="0">
+<line x1="75" y1="54.5" x2="79.5" y2="54.5" stroke="#6E6960" stroke-width="1.8" stroke-linecap="round"></line>
+<line x1="75" y1="61.5" x2="80.5" y2="61.5" stroke="#6E6960" stroke-width="1.8" stroke-linecap="round"></line>
+</g>
+<circle cx="67.5" cy="58" r="5.3" fill="#4B3A8C" stroke="#241E1A" stroke-width="2"></circle>
+</g>
+<rect x="11" y="66" width="78" height="8" rx="4" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<rect x="8" y="8" width="84" height="28" rx="13" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<ellipse cx="29.5" cy="27.5" rx="4.9" ry="3.1" fill="#E59A8C"></ellipse>
+<ellipse cx="70.5" cy="27.5" rx="4.9" ry="3.1" fill="#E59A8C"></ellipse>
+<g>
+<ellipse cx="42" cy="21" rx="5.6" ry="5.6" fill="#241E1A">
+</ellipse>
+<ellipse cx="60" cy="21" rx="5.6" ry="5.6" fill="#241E1A">
+</ellipse>
+<g fill="#F6F5F1">
+<circle cx="43.8" cy="19.2" r="1.7"></circle>
+<circle cx="61.8" cy="19.2" r="1.7"></circle>
+</g>
+</g>
+<path d="M46.5 29.5 L53.5 29.5" fill="none" stroke="#241E1A" stroke-width="2.9" stroke-linecap="round"></path>
+</g>
+</svg>

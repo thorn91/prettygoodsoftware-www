@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="-6 -9 112 108" role="img" aria-label="Tally the abacus resting, eyes closed">
+<g transform="translate(50 80)">
+<g>
+<g transform="translate(-50 -80)">
+<rect x="29" y="73" width="13" height="7" rx="3.5" fill="#241E1A"></rect>
+<rect x="58" y="73" width="13" height="7" rx="3.5" fill="#241E1A"></rect>
+<rect x="15" y="32" width="11" height="38" rx="3.3" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<rect x="74" y="32" width="11" height="38" rx="3.3" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<rect x="26" y="36" width="48" height="32" fill="#F6F5F1"></rect>
+<line x1="26" y1="45" x2="74" y2="45" stroke="#6E6960" stroke-width="2.5"></line>
+<line x1="26" y1="58" x2="74" y2="58" stroke="#6E6960" stroke-width="2.5"></line>
+<circle cx="32.5" cy="45" r="5.3" fill="#3F6E2B" stroke="#241E1A" stroke-width="2"></circle>
+<circle cx="45" cy="45" r="5.3" fill="#3F6E2B" stroke="#241E1A" stroke-width="2"></circle>
+<circle cx="57.5" cy="45" r="5.3" fill="#3F6E2B" stroke="#241E1A" stroke-width="2"></circle>
+<circle cx="32.5" cy="58" r="5.3" fill="#4B3A8C" stroke="#241E1A" stroke-width="2"></circle>
+<circle cx="45" cy="58" r="5.3" fill="#4B3A8C" stroke="#241E1A" stroke-width="2"></circle>
+<rect x="11" y="66" width="78" height="8" rx="4" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<path d="M15 54 Q17 66 28 70" fill="none" stroke="#241E1A" stroke-width="3.5" stroke-linecap="round"></path>
+<circle cx="30" cy="70.5" r="3.2" fill="#241E1A"></circle>
+<path d="M85 54 Q83 66 72 70" fill="none" stroke="#241E1A" stroke-width="3.5" stroke-linecap="round"></path>
+<circle cx="70" cy="70.5" r="3.2" fill="#241E1A"></circle>
+<rect x="8" y="8" width="84" height="28" rx="13" fill="#C4956A" stroke="#241E1A" stroke-width="3"></rect>
+<ellipse cx="29.5" cy="27.5" rx="4.9" ry="3.1" fill="#E59A8C"></ellipse>
+<ellipse cx="70.5" cy="27.5" rx="4.9" ry="3.1" fill="#E59A8C"></ellipse>
+<path d="M36 19.5 Q41 23.5 46 19.5" fill="none" stroke="#241E1A" stroke-width="3" stroke-linecap="round">
+</path>
+<path d="M54 19.5 Q59 23.5 64 19.5" fill="none" stroke="#241E1A" stroke-width="3" stroke-linecap="round">
+</path>
+<path d="M47 28 Q50 30.5 53 28" fill="none" stroke="#241E1A" stroke-width="2.9" stroke-linecap="round"></path>
+</g>
+</g>
+</g>
+<g opacity="0">
+<text x="84" y="6" font-size="11" font-weight="700" font-family="-apple-system, system-ui, sans-serif" fill="#6E6960">z</text>
+</g>
+<g opacity="0">
+<text x="80" y="10" font-size="8" font-weight="700" font-family="-apple-system, system-ui, sans-serif" fill="#6E6960">z</text>
+</g>
+</svg>
